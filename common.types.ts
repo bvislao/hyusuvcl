@@ -28,21 +28,10 @@ export interface ProjectInterface {
 export interface UserProfile {
     id: string;
     name: string;
-    perfil:string
+    rol:string
     email: string;
     description: string | null;
     avatarUrl: string;
-    githubUrl: string | null;
-    linkedinUrl: string | null;
-    projects: {
-      edges: { node: ProjectInterface }[];
-      pageInfo: {
-        hasPreviousPage: boolean;
-        hasNextPage: boolean;
-        startCursor: string;
-        endCursor: string;
-      };
-    };
 }
 
 export interface SessionInterface extends Session {

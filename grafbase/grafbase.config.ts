@@ -20,16 +20,21 @@ const SolicitudesIngreso = g.model('Solicitudes',{
   MantenimientoConcesionarios:g.boolean(),
   estadoAtendido:g.boolean().default(false),
   fechaRegistro:g.datetime().default(new Date())
+}).auth((rules) => {
+  rules.public().read()
+  rules.private().create().delete().update()
 });
 
 // @ts-ignore
 const User = g.model('User', {
   name: g.string().length({min:2,max:100}),
   email:g.string().unique(),
-  rol:g.string(),
+  rol:g.string().default("EXTERNO"),
   avatarUrl: g.url(),
   description:g.string().optional(),
-});
+}).auth((rules) => {
+  rules.public().read()
+})
 
 //@ts-ignore
 const Viajes = g.model('Viajes',{
@@ -37,17 +42,31 @@ const Viajes = g.model('Viajes',{
   maxInscripciones:g.int(),
   inscripcionesActuales:g.int(),
   participantes: g.relation(()=> Participantes).optional().list().optional()
+}).auth((rules) => {
+  rules.public().read()
+  rules.private().create().delete().update()
 });
 
 // @ts-ignore
 const Participantes = g.model('Participantes',{
   title:g.string(),
   Viajes:g.relation(Viajes).optional()
+}).auth((rules) => {
+  rules.public().read()
+  rules.private().create().delete().update()
 });
 
 
+const jwt = auth.JWT({
+  issuer: 'grafbase',
+  secret:  g.env('NEXTAUTH_SECRET')
+})
 
 
 export default config({
-  schema: g
+  schema: g,
+  auth: {
+    providers: [jwt],
+    rules: (rules) => rules.private()
+  },
 })
