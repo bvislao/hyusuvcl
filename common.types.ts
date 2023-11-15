@@ -28,7 +28,9 @@ export interface ProjectInterface {
 export interface UserProfile {
     id: string;
     name: string;
-    rol:string
+    rol:string;
+    ModeloHyundai:string;
+    Placa:string;
     email: string;
     description: string | null;
     avatarUrl: string;
@@ -40,6 +42,9 @@ export interface SessionInterface extends Session {
     name: string;
     email: string;
     avatarUrl: string;
+    rol:string;
+    ModeloHyundai:string;
+    Placa:string;
   };
 }
 

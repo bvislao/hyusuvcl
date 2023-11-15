@@ -9,7 +9,10 @@ import { SessionInterface } from "../../common.types";
 
 
 const ProfileMenu = ({ session }: { session: SessionInterface }) => {
+    console.log(session);
     const [openModal, setOpenModal] = useState(false);
+    const src = `${session.user.avatarUrl}`;
+
     const ImageLink = "https://hyundai-cyprus.com/wp-content/uploads/admin/2021/02/SantaFe-3rd-generation_4x3.png"
     return (
         <div className="flexCenter z-10 flex-col relative">
@@ -17,10 +20,10 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                 <Menu.Button className="flexCenter" onMouseEnter={() => setOpenModal(true)} >
                     {session?.user?.image && (
                         <Image
-                            src={session.user.image}
+                        loader={() => src} src={src}
                             width={40}
                             height={40}
-                            className="rounded-full"
+                            className="rounded-full border-radius"
                             alt="user profile image"
                         />
                     )}
@@ -42,10 +45,10 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                         onMouseLeave={() => setOpenModal(false)}
                     >
                         <div className="flex flex-col items-center gap-y-4">
-                            {session?.user?.image && (
+                            {session?.user?.avatarUrl && (
                                 <Image
-                                    src={session?.user?.image}
-                                    className="rounded-full"
+                                loader={() => src} src={src}
+                                    className="rounded-full border-radius"
                                     width={80}
                                     height={80}
                                     alt="profile Image"
@@ -61,7 +64,7 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                                     height={40}
                                     alt="profile Image"
                                 /> */}
-                                <span className="text-sm" color="red">Hyundai Santa Fe</span>
+                                <span className="text-sm" color="red">{session?.user?.ModeloHyundai} - {session?.user?.Placa} </span>
                         </div>
 
                         <div className="flex flex-col gap-2 pt-5 items-start w-full">

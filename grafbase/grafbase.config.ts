@@ -30,7 +30,9 @@ const User = g.model('User', {
   name: g.string().length({min:2,max:100}),
   email:g.string().unique(),
   rol:g.string().default("EXTERNO"),
-  avatarUrl: g.url(),
+  ModeloHyundai:g.string().optional(),
+  Placa:g.string().optional(),
+  avatarUrl: g.url().default("https://platform.cstatic-images.com/xlarge/in/v2/stock_photos/6f0dbf3e-2116-4750-ba5a-004d7ca279e3/9ae25e54-167c-47c8-aa82-e024cd6fcaf4.png"),
   description:g.string().optional(),
 }).auth((rules) => {
   rules.public().read()

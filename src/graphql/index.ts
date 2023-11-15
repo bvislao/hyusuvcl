@@ -5,6 +5,8 @@ export const getUserQuery = `
       name
       email
       rol
+      ModeloHyundai
+      Placa
       avatarUrl
       description
     }
@@ -19,6 +21,8 @@ export const createUserMutation = `
 				name
         email
         rol
+        ModeloHyundai
+        Placa
         avatarUrl
         description
 				id
