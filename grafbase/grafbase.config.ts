@@ -1,10 +1,17 @@
-import { g, auth, config } from '@grafbase/sdk'
+import { g, auth,connector, config } from '@grafbase/sdk'
 
-// @ts-ignore
-const SolicitudesIngreso = g.model('Solicitudes',{
-  dni:g.string().length({min:2,max:100}),
+const mongodb = connector.MongoDB('MongoDB', {
+  url: g.env("MONGO_ATLAS_URL"),
+  apiKey: g.env("MONGO_API_KEY"),
+  dataSource: g.env("MONGO_DATASOURCE"),
+  database: g.env("MONGO_DATABASE")
+})
+
+
+const Solicitud = g.model('Solicitud',{
+  dni:g.string().length({min:2,max:100}).unique(),
   nombre:g.string(),
-  correoElectronico:g.string(),
+  correoElectronico:g.string().unique(),
   apellidos:g.string(),
   celular:g.string(),
   fechaNacimiento:g.date(),
@@ -21,10 +28,37 @@ const SolicitudesIngreso = g.model('Solicitudes',{
   estadoAtendido:g.boolean().default(false),
   fechaRegistro:g.datetime().default(new Date())
 }).auth((rules) => {
-  rules.public().read()
+  rules.public().read().create().update()
   rules.private().create().delete().update()
 });
 
+
+/*
+// @ts-ignore
+const SolicitudesIngreso = g.model('Solicitudes',{
+  dni:g.string().length({min:2,max:100}).unique(),
+  nombre:g.string(),
+  correoElectronico:g.string().unique(),
+  apellidos:g.string(),
+  celular:g.string(),
+  fechaNacimiento:g.date(),
+  facebookUrl:g.string(),
+  Provincia:g.string(),
+  Distrito:g.string(),
+  ModeloHyundai:g.string(),
+  AnoFab:g.string(),
+  Placa:g.string().unique(),
+  VehiculoPropio:g.boolean(),
+  NombrePropietarios:g.string(),
+  ParentescoPropetario:g.string(),
+  MantenimientoConcesionarios:g.boolean(),
+  estadoAtendido:g.boolean().default(false),
+  fechaRegistro:g.datetime().default(new Date())
+}).auth((rules) => {
+  rules.public().read().create().update()
+  rules.private().create().delete().update()
+});
+*/
 // @ts-ignore
 const User = g.model('User', {
   name: g.string().length({min:2,max:100}),
@@ -36,8 +70,32 @@ const User = g.model('User', {
   description:g.string().optional(),
 }).auth((rules) => {
   rules.public().read()
+});
+
+
+// @ts-ignore
+const Rol = g.model('Rol', {
+  name: g.string().length({min:2,max:100}),
+  estado:g.int().default(1)
+}).auth((rules) => {
+  rules.public().read().create().update()
+});
+ 
+// @ts-ignore
+const Viajes = g.model('Viajes', {
+  title:g.string(),
+  maxInscripciones:g.int(),
+  inscripcionesActuales:g.int(),
+  inscripciones: g.relation(() => User).list().optional(),
+}).auth((rules) => {
+  rules.public().read().create().update()
 })
 
+
+
+
+
+/*
 //@ts-ignore
 const Viajes = g.model('Viajes',{
   title:g.string().search(),
@@ -58,12 +116,13 @@ const Participantes = g.model('Participantes',{
   rules.private().create().delete().update()
 });
 
-
+*/
 const jwt = auth.JWT({
   issuer: 'grafbase',
   secret:  g.env('NEXTAUTH_SECRET')
 })
 
+g.datasource(mongodb)
 
 export default config({
   schema: g,

@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
 
       try { 
         const data =await getUser(email) as { user?: UserProfile }
+        console.log("session",data);
         const newSession = {
           ...session,
           user: {
@@ -62,9 +63,8 @@ export const authOptions: NextAuthOptions = {
     }) {
       try {
         const userExists = await getUser(user?.email as string) as { user?: UserProfile }
-        console.log(userExists);
-          if (!userExists.user) {
-           await createUser(user.name as string, user.email as string)
+        if (!userExists?.user?.name) {
+          return false;//await createUser(user.name as string, user.email as string)
           }
 
         return true;

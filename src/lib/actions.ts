@@ -21,17 +21,13 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
 
 
 export const getUser = (email:string) => {
-  
     return makeGraphQLRequest(getUserQuery,{email})
 }
 
 export const createUser = (name: string, email: string) => {
   const variables = {
-    input: {
       name: name,
       email: email
-    },
   };
-  
   return makeGraphQLRequest(createUserMutation, variables);
 };
