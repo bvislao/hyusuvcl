@@ -16,14 +16,14 @@ type Props = {
 
 const RegisterMember = ({ type, sol }: Props) => {
     const router = useRouter()
-
     const [form, setForm] = useState<Solicitudes>({
+        id:"0000",
         dni: sol?.dni || "",
         nombre: sol?.nombre || "",
         apellidos: sol?.apellidos || "",
         correoElectronico: sol?.correoElectronico || "",
         celular: sol?.celular || "",
-        fechaNacimiento: sol?.fechaNacimiento || null,
+        fechaNacimiento: sol?.fechaNacimiento || "01-01-1900",
         facebookUrl: sol?.facebookUrl || "",
         Provincia: sol?.Provincia || "",
         Distrito: sol?.Distrito || "",
@@ -33,7 +33,9 @@ const RegisterMember = ({ type, sol }: Props) => {
         VehiculoPropio: sol?.VehiculoPropio || false,
         NombrePropietarios: sol?.NombrePropietarios || "",
         ParentescoPropetario: sol?.ParentescoPropetario || "",
-        MantenimientoConcesionarios: sol?.MantenimientoConcesionarios || false
+        MantenimientoConcesionarios: sol?.MantenimientoConcesionarios || false,
+        estadoAtendido:false,
+        fechaRegistro: new Date(Date.now())
     })
 
     const handleStateChangeBoolean = (fieldName: keyof Solicitudes, value: Boolean) => {
