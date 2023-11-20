@@ -1,6 +1,6 @@
 const nextConfig = {
     images: {
-      domains: ['lh3.googleusercontent.com', 'res.cloudinary.com', 'task.com']
+      domains: ['lh3.googleusercontent.com', 'res.cloudinary.com', 'task.com',"hyusuvcl.vercel.app"]
     },
     experimental: {
       serverComponentsExternalPackages: ['cloudinary', 'graphql-request']
