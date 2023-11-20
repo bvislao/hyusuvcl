@@ -10,13 +10,14 @@ import Button from "./Button";
 import ProfileMenu from "./ProfileMenu";
 // eslint-disable-next-line @next/next/no-async-client-component
 const Navbar = async () => {
+  const src = `https://hyusuvcl.vercel.app/logo.png`;
   const session = await getCurrentUser();
   return (
     <nav className='flexBetween navbar'>
     <div className='flex-1 flexStart gap-10'>
         <Link href='/'>
           <Image
-            src='/logo.png '
+             loader={() => src} src={src}
             width={116}
             height={43}
             alt='logo'

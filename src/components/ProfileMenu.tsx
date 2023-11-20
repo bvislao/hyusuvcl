@@ -12,8 +12,6 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
     console.log(session);
     const [openModal, setOpenModal] = useState(false);
     const src = `${session.user.avatarUrl}`;
-
-    const ImageLink = "https://hyundai-cyprus.com/wp-content/uploads/admin/2021/02/SantaFe-3rd-generation_4x3.png"
     return (
         <div className="flexCenter z-10 flex-col relative">
             <Menu as="div">
