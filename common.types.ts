@@ -1,29 +1,5 @@
 import { User, Session } from 'next-auth'
 
-export type FormState = {
-    title: string;
-    description: string;
-    image: string;
-    liveSiteUrl: string;
-    githubUrl: string;
-    category: string;
-};
-
-export interface ProjectInterface {
-    title: string;
-    description: string;
-    image: string;
-    liveSiteUrl: string;
-    githubUrl: string;
-    category: string;
-    id: string;
-    createdBy: {
-      name: string;
-      email: string;
-      avatarUrl: string;
-      id: string;
-    };
-}
 
 export interface UserProfile {
     id: string;
@@ -48,11 +24,29 @@ export interface SessionInterface extends Session {
   };
 }
 
-export interface ProjectForm {
-  title: string;
-  description: string;
-  image: string;
-  liveSiteUrl: string;
-  githubUrl: string;
-  category: string;
+
+export interface Solicitudes {
+  id: string;
+  dni: string;
+  nombre:string;
+  apellidos:string;
+  correoElectronico:string;
+  celular: string;
+  fechaNacimiento: String;
+  facebookUrl: string;
+
+  Provincia:string;
+  Distrito: string;
+  ModeloHyundai: string;
+  AnoFab: string;
+
+  Placa:string;
+  VehiculoPropio: boolean;
+  NombrePropietarios: string;
+  ParentescoPropetario: string;
+
+  MantenimientoConcesionarios:boolean;
+  estadoAtendido: boolean | null;
+  fechaRegistro: Date | null;
 }
+

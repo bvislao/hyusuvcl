@@ -8,9 +8,9 @@ const Footer = () => {
     <section className="flexStart footer">
         <div className="flexBetween footer_copyright">
             <p>@ 2023 Club Hyundai SUVs by <strong><Link href={"https://www.linkedin.com/in/bvislaochavez/"}>  Bryan Vislao Chavez</Link></strong>. All rights reserved</p>
-            {/* <p className="text-gray">xx
-             Hecho con amor <span className="text-black font-semibold">❤️</span>  
-            </p> */}
+            <p className="text-gray">
+             <strong>Hecho con amor <span className="text-black font-semibold">❤️</span> </strong>
+            </p> 
         </div>
     </section>
   )

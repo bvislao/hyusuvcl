@@ -1,5 +1,6 @@
-import { createUserMutation,getUserQuery } from "@/graphql";
+import { createUserMutation,getUserQuery,createSolicitudes } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
+import { Solicitudes } from "../../common.types";
 
 const isProduction = process.env.NODE_ENV === 'production';
 const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || '' : 'http://127.0.0.1:4000/graphql';
@@ -31,3 +32,26 @@ export const createUser = (name: string, email: string) => {
   };
   return makeGraphQLRequest(createUserMutation, variables);
 };
+
+export const createSolicitudRegister = (solicitud: Solicitudes) => {
+  console.log("solicitud",solicitud);
+  const variables = {
+    "dni": solicitud.dni,
+	"correoElectronico": solicitud.correoElectronico,
+	"nombre":solicitud.nombre ,
+	"apellidos": solicitud.apellidos,
+	"celular": solicitud.celular,
+	"fechaNacimiento": solicitud.fechaNacimiento,
+	"facebookUrl":solicitud.facebookUrl,
+	"Provincia": solicitud.Provincia,
+	"Distrito": solicitud.Distrito,
+	"ModeloHyundai": solicitud.ModeloHyundai,
+	"AnoFab":solicitud.AnoFab,
+	"Placa": solicitud.Placa,
+	"VehiculoPropio": solicitud.VehiculoPropio.toString() === "true" ? true : false,
+	"NombrePropietarios": solicitud.NombrePropietarios,
+	"ParentescoPropetario": solicitud.ParentescoPropetario,
+	"MantenimientoConcesionarios": solicitud.MantenimientoConcesionarios.toString() === "true" ? true : false
+};
+  return makeGraphQLRequest(createSolicitudes, variables);
+}
