@@ -72,7 +72,6 @@ mutation UserCreate($name:String!,$email:String!) {
 `;
 
 
-//***SOLICITUDES***/
 /*
 {
 	"dni": "72854591"

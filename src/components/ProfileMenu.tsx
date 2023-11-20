@@ -57,20 +57,12 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                             <p className="font-semibold">{session?.user?.name}</p>
                             <span className="text-sm" color="red">{session?.user?.rol}</span>
                            
-                            {/* <Image
-                                    src={ImageLink}
-                                    className="rounded-full"
-                                    width={40}
-                                    height={40}
-                                    alt="profile Image"
-                                /> */}
+                           
                                 <span className="text-sm" color="red">{session?.user?.ModeloHyundai} - {session?.user?.Placa} </span>
                         </div>
 
                         <div className="flex flex-col gap-2 pt-5 items-start w-full">
-                            {/* <Menu.Item>
-                                <Link href={`/profile/${session?.user?.id}`} className="text-sm">Work Preferences</Link>
-                            </Menu.Item> */}
+                           
                             <Menu.Item>
                                 <Link href={`/profile/${session?.user?.id}`} className="text-sm">Configuracion APP</Link>
                             </Menu.Item>

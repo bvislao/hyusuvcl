@@ -9,38 +9,33 @@ import CustomMenu from '@/components/CustomMenu';
 import { modelHyundaiFilters, SINO } from '../../constants';
 import Button from '@/components/Button';
 import { createSolicitudRegister } from '@/lib/actions';
-type Props = {
-    type: string,
-    sol?: Solicitudes
-}
 
-const RegisterMember = ({ type, sol }: Props) => {
+
+const RegisterMember = () => {
     const router = useRouter()
     const [form, setForm] = useState<Solicitudes>({
         id:"0000",
-        dni: sol?.dni || "",
-        nombre: sol?.nombre || "",
-        apellidos: sol?.apellidos || "",
-        correoElectronico: sol?.correoElectronico || "",
-        celular: sol?.celular || "",
-        fechaNacimiento: sol?.fechaNacimiento || "01-01-1900",
-        facebookUrl: sol?.facebookUrl || "",
-        Provincia: sol?.Provincia || "",
-        Distrito: sol?.Distrito || "",
-        ModeloHyundai: sol?.ModeloHyundai || "",
-        AnoFab: sol?.AnoFab || "",
-        Placa: sol?.Placa || "",
-        VehiculoPropio: sol?.VehiculoPropio || false,
-        NombrePropietarios: sol?.NombrePropietarios || "",
-        ParentescoPropetario: sol?.ParentescoPropetario || "",
-        MantenimientoConcesionarios: sol?.MantenimientoConcesionarios || false,
+        dni:  "",
+        nombre: "",
+        apellidos: "",
+        correoElectronico: "",
+        celular: "",
+        fechaNacimiento: "",
+        facebookUrl: "",
+        Provincia: "",
+        Distrito: "",
+        ModeloHyundai: "",
+        AnoFab: "",
+        Placa: "",
+        VehiculoPropio: "NO",
+        NombrePropietarios: "",
+        ParentescoPropetario:"",
+        MantenimientoConcesionarios: "NO",
         estadoAtendido:false,
         fechaRegistro: new Date(Date.now())
     })
 
-    const handleStateChangeBoolean = (fieldName: keyof Solicitudes, value: Boolean) => {
-        setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
-    };
+  
     const handleStateChange = (fieldName: keyof Solicitudes, value: string) => {
         setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
     };
@@ -137,7 +132,7 @@ const RegisterMember = ({ type, sol }: Props) => {
                 title="Marca/Modelo"
                 state={form.ModeloHyundai}
                 filters={modelHyundaiFilters}
-                setState={(value) => handleStateChangeBoolean('ModeloHyundai', value.toLowerCase() === 'true')}
+                setState={(value) => handleStateChange('ModeloHyundai', value.toString())}
             />
 
             <FormField
@@ -161,7 +156,7 @@ const RegisterMember = ({ type, sol }: Props) => {
                 title="Vehiculo Propio"
                 state={form.VehiculoPropio.toString()}
                 filters={SINO}
-                setState={(value) => handleStateChangeBoolean('VehiculoPropio',  value.toLowerCase() === 'true')}
+                setState={(value) => handleStateChange('VehiculoPropio',  value)}
             />  
 
             <FormField
@@ -185,7 +180,7 @@ const RegisterMember = ({ type, sol }: Props) => {
                 title="Mantenimiento Concesionario"
                 state={form.MantenimientoConcesionarios.toString()}
                 filters={SINO}
-                setState={(value) => handleStateChangeBoolean('MantenimientoConcesionarios',  value.toLowerCase() === 'true')}
+                setState={(value) => handleStateChange('MantenimientoConcesionarios',  value)}
             /> 
 
             <br />

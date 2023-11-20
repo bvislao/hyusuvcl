@@ -48,10 +48,10 @@ export const createSolicitudRegister = (solicitud: Solicitudes) => {
 	"ModeloHyundai": solicitud.ModeloHyundai,
 	"AnoFab":solicitud.AnoFab,
 	"Placa": solicitud.Placa,
-	"VehiculoPropio": solicitud.VehiculoPropio.toString() === "true" ? true : false,
+	"VehiculoPropio": solicitud.VehiculoPropio.toString() === "SI" ? true : false,
 	"NombrePropietarios": solicitud.NombrePropietarios,
 	"ParentescoPropetario": solicitud.ParentescoPropetario,
-	"MantenimientoConcesionarios": solicitud.MantenimientoConcesionarios.toString() === "true" ? true : false
+	"MantenimientoConcesionarios": solicitud.MantenimientoConcesionarios.toString() === "SI" ? true : false
 };
   return makeGraphQLRequest(createSolicitudes, variables);
 }

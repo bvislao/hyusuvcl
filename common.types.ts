@@ -26,24 +26,24 @@ export interface SessionInterface extends Session {
 
 
 export interface Solicitudes {
-  id: string | "";
-  dni: string| "";
-  nombre:string| "";
-  apellidos:string| "";
-  correoElectronico:string| "";
-  celular: string| "";
-  fechaNacimiento: string| "";
-  facebookUrl: string| "";
-  Provincia:string| "";
-  Distrito: string| "";
-  ModeloHyundai: string| "";
-  AnoFab: string| "";
-  Placa:string| "";
-  VehiculoPropio: boolean  | false;
-  NombrePropietarios: string| "";
-  ParentescoPropetario: string| "";
-  MantenimientoConcesionarios:boolean | false;
-  estadoAtendido: boolean | false;
-  fechaRegistro: Date | null;
+  id: string;
+  dni: string;
+  nombre:string;
+  apellidos:string;
+  correoElectronico:string;
+  celular: string;
+  fechaNacimiento: string;
+  facebookUrl: string;
+  Provincia:string;
+  Distrito: string;
+  ModeloHyundai: string;
+  AnoFab: string;
+  Placa:string;
+  VehiculoPropio: string;
+  NombrePropietarios: string;
+  ParentescoPropetario: string;
+  MantenimientoConcesionarios:string;
+  estadoAtendido: boolean;
+  fechaRegistro: Date;
 }
 
