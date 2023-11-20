@@ -34,7 +34,6 @@ export const createUser = (name: string, email: string) => {
 };
 
 export const createSolicitudRegister = (solicitud: Solicitudes) => {
-  console.log("solicitud",solicitud);
   const variables = {
     "dni": solicitud.dni,
 	"correoElectronico": solicitud.correoElectronico,

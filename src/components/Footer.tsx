@@ -15,8 +15,6 @@ type ColumnProps = {
 };
 
 const FooterColumn = ({ title, links }: ColumnProps) => {
-  console.log(title);
-  console.log(links);
   return (
   <div className="footer_column">
       <h4 className="font-semibold">{title}</h4>
@@ -27,7 +25,7 @@ const FooterColumn = ({ title, links }: ColumnProps) => {
 };
 
 const Footer = () => {
-  console.log(footerLinks);
+  //console.log(footerLinks);
   return (
     <section className="flexStart footer">
       <div className="flex flex-col gap-12 w-full">

@@ -87,12 +87,13 @@ const RegisterMember = () => {
           parte de está gran familia.
         </span>
       </div>
-      <form onSubmit={handleFormSubmit} className="form p-1">
+      <form onSubmit={handleFormSubmit} className="form p-2 mb-4">
         <FormField
-          title="DNI"
+          title="Documento de Identidad"
           state={form.dni}
-          type={"number"}
-          placeholder="Ingresa tu numero de DNI"
+          type={"text"}
+          maxLength={12}
+          placeholder="Ingresa tu numero de documento"
           setState={(value) => handleStateChange("dni", value)}
         />
         <FormField
@@ -129,10 +130,10 @@ const RegisterMember = () => {
           placeholder={""}
         />
         <FormField
-          title="Facebook URL"
+          title="Facebook Perfil"
           type={"text"}
           state={form.facebookUrl}
-          placeholder="Ingresa link de perfil de facebook"
+          placeholder="Ingresa Nombre de perfil de facebook"
           setState={(value) => handleStateChange("facebookUrl", value)}
         />
         <FormField
@@ -159,7 +160,8 @@ const RegisterMember = () => {
         <br />
         <FormField
           title="Año de Fabricación"
-          type={"number"}
+          type={"text"}
+          maxLength={4}
           state={form.AnoFab}
           placeholder="Ingresa el Año de Fabricación"
           setState={(value) => handleStateChange("AnoFab", value)}
@@ -167,10 +169,12 @@ const RegisterMember = () => {
         <FormField
           title="Placa"
           type={"text"}
+          setMask={true}
+          mask={"___-___"}
           state={form.Placa}
-          placeholder="ABC-222"
+          placeholder="___-___"
           setState={(value) => handleStateChange("Placa", value)}
-        />{" "}
+        />
         <br />
         <CustomMenu
           title="Vehiculo Propio"
@@ -207,7 +211,7 @@ const RegisterMember = () => {
           <Button
             title={"Enviar Solicitud"}
             type="submit"
-            leftIcon={submitting ? "" : "/plus.svg"}
+            leftIcon={submitting ? "/loading.svg" : "/plus.svg"}
             submitting={submitting}
           />
         </div>
