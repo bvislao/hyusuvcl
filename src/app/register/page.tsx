@@ -23,7 +23,7 @@ const RegisterMember = ({ type, sol }: Props) => {
         apellidos: sol?.apellidos || "",
         correoElectronico: sol?.correoElectronico || "",
         celular: sol?.celular || "",
-        fechaNacimiento: sol?.fechaNacimiento,
+        fechaNacimiento: sol?.fechaNacimiento || null,
         facebookUrl: sol?.facebookUrl || "",
         Provincia: sol?.Provincia || "",
         Distrito: sol?.Distrito || "",
@@ -106,9 +106,8 @@ const RegisterMember = ({ type, sol }: Props) => {
             <FormField
                 title="Fecha de Nacimiento"
                 type={"date"}
-                state={form.fechaNacimiento}
-                setState={(value) => handleStateChange('fechaNacimiento', value)}
-            />
+                state={form.fechaNacimiento.toString()}
+                setState={(value) => handleStateChange('fechaNacimiento', value)} placeholder={''}            />
             <FormField
                 title="Facebook URL"
                 type={"text"}
@@ -158,7 +157,7 @@ const RegisterMember = ({ type, sol }: Props) => {
  
             <CustomMenu
                 title="Vehiculo Propio"
-                state={form.VehiculoPropio}
+                state={form.VehiculoPropio.toString()}
                 filters={SINO}
                 setState={(value) => handleStateChangeBoolean('VehiculoPropio',  value.toLowerCase() === 'true')}
             />  
