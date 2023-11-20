@@ -59,9 +59,12 @@ const RegisterMember = () => {
     return <>
         <div className='flexCenter  p-2 m-2 text-5xl'>
             <br />
-            <h1>¡Se un nuevo miembro!</h1>
+            <h1>&#128073;¡Sé un nuevo miembro! &#128526;</h1><br />
+           
         </div>
-
+        <div className="flexCenter  p-2 m-2 text-sm">
+                <span className="text-cyan-700">Llena todos los datos requeridos para validar tu información y ser parte de está gran familia.</span>
+            </div>
         <form
             onSubmit={handleFormSubmit}
             className=" form pb-20">
@@ -127,13 +130,15 @@ const RegisterMember = () => {
                 state={form.Distrito}
                 placeholder="Ingresa el distrito donde resides"
                 setState={(value) => handleStateChange('Distrito', value)}
-            /> <br />
+            />
+            <br />
             <CustomMenu
                 title="Marca/Modelo"
                 state={form.ModeloHyundai}
                 filters={modelHyundaiFilters}
-                setState={(value) => handleStateChange('ModeloHyundai', value.toString())}
+                setState={(value) => handleStateChange('ModeloHyundai', value)}
             />
+            <br />
 
             <FormField
                 title="Año de Fabricación"
@@ -158,6 +163,7 @@ const RegisterMember = () => {
                 filters={SINO}
                 setState={(value) => handleStateChange('VehiculoPropio',  value)}
             />  
+            <br />
 
             <FormField
                 title="Nombre de Propietario"

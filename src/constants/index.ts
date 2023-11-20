@@ -20,7 +20,7 @@ export const NavLinks = [
     "Hyundai Venue",
     "Hyundai Veracruz",
     "Otro Modelo Hyundai",
-    "Otra Marca",
+    "Otra Marca"
   ]
   
 

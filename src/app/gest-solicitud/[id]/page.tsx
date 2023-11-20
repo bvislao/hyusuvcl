@@ -2,8 +2,9 @@ import { redirect } from "next/navigation";
 
 import { getCurrentUser } from "@/lib/session";
 
-const Solicitudes = async () => {
+const GestionarSolicitud = async ({ params: { id } }: { params: { id: string } }) => {
   const session = await getCurrentUser();
+
   if (!session?.user) {
     redirect("/")
   }{
@@ -13,8 +14,8 @@ const Solicitudes = async () => {
   }
 
   return (
-    <div>Gestionar Solicitudes</div>
+    <div>{id}</div>
   );
 };
 
-export default Solicitudes;
+export default GestionarSolicitud;
