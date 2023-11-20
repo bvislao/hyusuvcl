@@ -9,15 +9,15 @@ type Props = {
 
 const FormField = ({ type, title, state, placeholder, isTextArea, setState }: Props) => {
     return (
-        <div className="flex-outer">
+        <div className="flex-col">
           
-            <label className="w-full text-gray-100">{title}</label>
+            <label className="flex-wrap text-gray-100">{title}</label>
 
             {isTextArea ? (
                 <textarea
                     placeholder={placeholder}
                     value={state}
-                    className="form_field-input"
+                    className="form_field-input mt-2"
                     onChange={(e) => setState(e.target.value)}
                 />
             ) : (
@@ -26,7 +26,7 @@ const FormField = ({ type, title, state, placeholder, isTextArea, setState }: Pr
                     placeholder={placeholder}
                     required
                     value={state}
-                    className="form_field-input"
+                    className="form_field-input mb-2 mt-2"
                     onChange={(e) => setState(e.target.value)}
                 />
             )}
