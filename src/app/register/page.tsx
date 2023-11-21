@@ -1,7 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useRouter } from "next/navigation";
 import FormField from "@/components/FormField";
 import { Solicitudes } from "../../../common.types";
@@ -9,9 +15,13 @@ import CustomMenu from "@/components/CustomMenu";
 import { modelHyundaiFilters, SINO } from "../../constants";
 import Button from "@/components/Button";
 import { createSolicitudRegister } from "@/lib/actions";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 const RegisterMember = () => {
   const router = useRouter();
+  const [token, setToken] = useState("");
+  const captchaRef = useRef(null);
+
   const [form, setForm] = useState<Solicitudes>({
     id: "0000",
     dni: "",
@@ -59,10 +69,34 @@ const RegisterMember = () => {
   };
   const [submitting, setSubmitting] = useState<boolean>(false);
 
+  const onExpire = () => {
+    console.log("hCaptcha Token Expired");
+  };
+
+  const onError = (err: any) => {
+    console.log(`hCaptcha Error: ${err}`);
+  };
+
+  useEffect(() => {
+    if (token != "") {
+      // Token is set, can submit here
+      console.log(`hCaptcha Token: ${token}`);
+    }
+  }, [token, form]);
+
+  const onVerifyCaptcha = (token: string) => {
+    setToken(token);
+  };
+
+  const submitCaptcha = () => {};
+
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     try {
+      if (token == "" || token == null || token == undefined){
+        return ;
+      }
       var response = await createSolicitudRegister(form);
       console.log(response);
       router.push("/thanks-register");
@@ -206,6 +240,18 @@ const RegisterMember = () => {
             handleStateChange("MantenimientoConcesionarios", value)
           }
         />
+        <br />
+        <div className="flexCenter w-full">
+          <HCaptcha
+            // This is testing sitekey, will autopass
+            // Make sure to replace
+            sitekey="7d4d941c-bd98-413f-ad45-ab7880964ff5"
+            onVerify={onVerifyCaptcha}
+            onError={onError}
+            onExpire={onExpire}
+            ref={captchaRef}
+          />
+        </div>
         <br />
         <div className="flexCenter w-full">
           <Button
