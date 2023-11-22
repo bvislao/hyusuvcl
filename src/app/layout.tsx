@@ -1,6 +1,8 @@
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { toast ,ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata = {
   title: "Club Hyundai SUVS ",
@@ -18,6 +20,7 @@ export default async function RootLayout({
       <body>
         <Navbar />
         <main>{children}</main>
+        <ToastContainer />
         <Footer />
       </body>
     </html>

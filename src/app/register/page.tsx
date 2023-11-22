@@ -16,6 +16,8 @@ import { modelHyundaiFilters, SINO } from "../../constants";
 import Button from "@/components/Button";
 import { createSolicitudRegister } from "@/lib/actions";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { toast } from "react-toastify";
+
 
 const RegisterMember = () => {
   const router = useRouter();
@@ -45,6 +47,7 @@ const RegisterMember = () => {
   });
 
   const handleStateChange = (fieldName: keyof Solicitudes, value: string) => {
+
     if (fieldName == "VehiculoPropio") {
       if (value == "SI") {
         setForm((prevForm) => ({
@@ -94,8 +97,10 @@ const RegisterMember = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      if (token == "" || token == null || token == undefined){
-        return ;
+      if (token == "" || token == null || token == undefined) {
+        toast('Captcha invalido', { hideProgressBar: true, autoClose: 2000, type: 'error' })
+        setSubmitting(false);
+        return;
       }
       var response = await createSolicitudRegister(form);
       console.log(response);

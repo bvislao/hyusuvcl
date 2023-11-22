@@ -52,7 +52,7 @@ const FormField = ({
         <input
           type={type || "text"}
           placeholder={placeholder}
-          pattern={type == "number" ? "\d*" : "\*"}
+          pattern={type == "number" ? "\d+" : "\.*"}
           required
           value={state}
           maxLength={maxLength}
