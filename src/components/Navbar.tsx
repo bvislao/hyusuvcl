@@ -12,17 +12,17 @@ import ProfileMenu from "./ProfileMenu";
 const Navbar = async () => {
   const session = await getCurrentUser();
   return (
-    <nav className='flexBetween navbar'>
-    <div className='flex-1 flexStart gap-10'>
-        <Link href='/'>
+    <nav className="flexBetween navbar">
+      <div className="flex-1 flexStart gap-10">
+        <Link href="/">
           <Image
-              src={"https://hyusuvcl.vercel.app/logo.png"}
+            src={"https://hyusuvcl.vercel.app/logo.png"}
             width={116}
             height={43}
-            alt='logo'
+            alt="logo"
           />
         </Link>
-        <ul className='xl:flex hidden text-small gap-7'>
+        <ul className="xl:flex hidden text-small gap-7">
           {NavLinks.map((link) => (
             <Link href={link.href} key={link.text}>
               {link.text}
@@ -31,13 +31,18 @@ const Navbar = async () => {
         </ul>
       </div>
 
-      <div className='flexCenter gap-4'>
+      <div className="flexCenter gap-4 pr-4">
         {session?.user ? (
           <>
-            <ProfileMenu session={session} />
-            <Link href="/solicitudes">
-              <Button title='Gestion de Solicitudes' />
-            </Link>
+           <ProfileMenu session={session} /><br />
+            {session?.user.rol === "ADMIN" ? (
+              <Link href="/solicitudes">
+                <Button title="Gestion de Solicitudes" />
+              </Link>
+            ) : (
+              <></>
+            )}
+             
           </>
         ) : (
           <AuthProviders />

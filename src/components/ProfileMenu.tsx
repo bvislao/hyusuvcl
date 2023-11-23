@@ -9,7 +9,7 @@ import { SessionInterface } from "../../common.types";
 
 
 const ProfileMenu = ({ session }: { session: SessionInterface }) => {
-    console.log(session);
+    //console.log(session);
     const [openModal, setOpenModal] = useState(false);
     const src = `${session.user.avatarUrl}`;
     return (
@@ -60,7 +60,7 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                         </div>
 
                         <div className="flex flex-col gap-2 pt-5 items-start w-full">
-                           
+{/*                            
                             <Menu.Item>
                                 <Link href={`/profile/${session?.user?.id}`} className="text-sm">Configuracion APP</Link>
                             </Menu.Item>
@@ -69,12 +69,12 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                             </Menu.Item>
                             <Menu.Item>
                                 <Link href={`/profile/${session?.user?.id}`} className="text-sm">Mi perfil</Link>
-                            </Menu.Item>
+                            </Menu.Item> */}
                         </div>
                         <div className="w-full flexStart border-t border-nav-border mt-5 pt-5">
                             <Menu.Item>
                                 <button type="button" className="text-sm" onClick={() => signOut()}> 
-                                    Sign out
+                                    Cerrar sesión
                                 </button>
                             </Menu.Item>
                         </div>

@@ -4,11 +4,11 @@ import { footerLinks } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 
-type Links = { 
-  href:string;
-  key:string;
-  text:string;
-}
+type Links = {
+  href: string;
+  key: string;
+  text: string;
+};
 type ColumnProps = {
   title: string;
   links: Array<Links>;
@@ -16,15 +16,22 @@ type ColumnProps = {
 
 const FooterColumn = ({ title, links }: ColumnProps) => {
   return (
-  <div className="footer_column">
+    <div className="footer_column">
       <h4 className="font-semibold">{title}</h4>
       <ul className="flex flex-col gap-2 font-normal">
-          {links.map((link) => <Link target="_bla" href={link?.href} key={link.key}>{link.text}</Link>)} 
+        {links.map((link) => (
+          <Link target="_bla" href={link?.href} key={link.key}>
+            {link.text}
+          </Link>
+        ))}
       </ul>
-  </div>);
+    </div>
+  );
 };
 
 const Footer = () => {
+  const srcLoad = `https://gildemeister-retail.pe/wp-content/uploads/2021/03/showroom_header_modelo-santafe.png`;
+
   //console.log(footerLinks);
   return (
     <section className="flexStart footer">
@@ -41,13 +48,33 @@ const Footer = () => {
             🥇 Comunidad Oficial Hyundai en Perú 🇵🇪. Autos, aventuras, viajes y
             más. 🚙
           </p>
+         
         </div>
-        <div className="flex flex-wrap gap-12">
-              <FooterColumn title={footerLinks[0].title} links={footerLinks[0].links} /> 
-              <div className="flex-1 flex flex-col gap-4">
-                    <FooterColumn title={footerLinks[1].title} links={footerLinks[1].links} />
-              </div>
+        <div className="flex flexCenter">
+       
+            <FooterColumn
+            title={footerLinks[0].title}
+            links={footerLinks[0].links}
+          />
+          <div className="flex-1 flex flex-col gap-4">
+            <FooterColumn
+              title={footerLinks[1].title}
+              links={footerLinks[1].links}
+            />
+            
+          </div>
+          <Image
+              loader={() => srcLoad}
+              src={srcLoad}
+              width={400}
+              height={200}
+              alt="logo"
+            />
         </div>
+        <div className="flex flex-wrap gap-5">
+          
+        </div>
+        
       </div>
 
       <div className="flexBetween footer_copyright">
@@ -55,7 +82,7 @@ const Footer = () => {
           @ 2023 Club Hyundai SUVs by{" "}
           <strong>
             <Link
-              className="text-red-700"
+              className="text-gray-100"
               href={"https://www.linkedin.com/in/bvislaochavez/"}
             >
               {" "}
