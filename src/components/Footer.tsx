@@ -63,13 +63,13 @@ const Footer = () => {
             />
             
           </div>
-          <Image
+          {/* <Image
               loader={() => srcLoad}
               src={srcLoad}
               width={400}
               height={200}
               alt="logo"
-            />
+            /> */}
         </div>
         <div className="flex flex-wrap gap-5">
           
