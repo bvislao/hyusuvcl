@@ -1,5 +1,9 @@
 //import { g, auth,connector, config } from '@grafbase/sdk'
 import { config, connector, graph } from '@grafbase/sdk'
+var log4js = require("log4js");
+var logger = log4js.getLogger();
+logger.level = "debug";
+
 
 const g = graph.Standalone()
 
@@ -7,6 +11,8 @@ const url = g.env("MONGO_ATLAS_URL");
 const apiKey = g.env("MONGO_API_KEY");
 const dataSource = g.env("MONGO_DATASOURCE");
 const database = g.env("MONGO_DATABASE");
+
+logger.debug("Some debug messages");
 console.log("url",url);
 console.log("apiKey",apiKey);
 console.log("dataSource",dataSource);
@@ -18,8 +24,7 @@ const mongodb = connector.MongoDB('MongoDB', {
   dataSource:dataSource,
   database: database
 })
-
-console.log(mongodb);
+logger.debug(mongodb);
 
 /*** MONGO DB - Solicitud */
 mongodb.model('Solicitud',{
