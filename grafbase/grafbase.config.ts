@@ -1,5 +1,5 @@
 //import { g, auth,connector, config } from '@grafbase/sdk'
-import { config, connector, auth, graph } from '@grafbase/sdk'
+import { config, connector, graph } from '@grafbase/sdk'
 
 
 const g = graph.Standalone()
@@ -117,12 +117,15 @@ mongodb.model('ViajeUsuario', {
     rules.public().read().create().update()
 });
 
-
+/*
 const jwt = auth.JWT({
   issuer: 'grafbase',
   secret:  g.env('NEXTAUTH_SECRET')
 })
++/
 
+
+ */
 g.datasource(mongodb)
 
 export default config({
@@ -135,8 +138,9 @@ export default config({
       }
     ]
   }
+  /*
   ,auth: {
     providers: [jwt],
     rules: (rules) => rules.private()
-  },
+  },*/
 })
