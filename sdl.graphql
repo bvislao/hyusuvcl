@@ -1,0 +1,1475 @@
+type Convenio {
+	"""
+	Unique identifier
+	"""
+	id: ID!
+	name: String!
+	logoUrl: URL!
+	description: String
+	contacto: String
+}
+input ConvenioByInput {
+	id: ID
+}
+input ConvenioCollection {
+	id: MongoDBIDSearchFilterInput
+	"""
+	All of the filters must match
+	"""
+	ALL: [ConvenioCollection]
+	"""
+	None of the filters must match
+	"""
+	NONE: [ConvenioCollection]
+	"""
+	At least one of the filters must match
+	"""
+	ANY: [ConvenioCollection]
+	name: MongoDBStringSearchFilterInput
+	logoUrl: MongoDBURLSearchFilterInput
+	description: MongoDBStringSearchFilterInput
+	contacto: MongoDBStringSearchFilterInput
+}
+type ConvenioConnection {
+	"""
+	Information to aid in pagination
+	"""
+	pageInfo: PageInfo!
+	edges: [ConvenioEdge]
+}
+"""
+Input to create a Convenio
+"""
+input ConvenioCreateInput {
+	id: ID
+	name: String!
+	logoUrl: URL! = "https://sportwagen-peru.com/wp-content/uploads/2021/04/logotipo-sportwagen-hyundai.png"
+	description: String
+	contacto: String
+}
+type ConvenioCreateManyPayload {
+	insertedIds: [ID]
+}
+type ConvenioCreatePayload {
+	insertedId: ID
+}
+type ConvenioDeletePayload {
+	deletedCount: Int
+}
+type ConvenioEdge {
+	node: Convenio!
+	cursor: String!
+}
+input ConvenioOrderByInput {
+	id: MongoOrderByDirection
+	name: MongoOrderByDirection
+	logoUrl: MongoOrderByDirection
+	description: MongoOrderByDirection
+	contacto: MongoOrderByDirection
+}
+input ConvenioUpdateInput {
+	name: MongoDBRequiredStringUpdateInput
+	logoUrl: MongoDBRequiredURLUpdateInput
+	description: MongoDBOptionalStringUpdateInput
+	contacto: MongoDBOptionalStringUpdateInput
+}
+type ConvenioUpdatePayload {
+	matchedCount: Int
+	modifiedCount: Int
+}
+"""
+A date string, such as 2007-12-03, is compliant with the full-date format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for the representation of dates and times using the Gregorian calendar.
+
+This scalar is a description of the date, as used for birthdays for example. It cannot represent an instant on the timeline.
+"""
+scalar Date
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, is compliant with the date-time format outlined in section 5.6 of the RFC 3339
+profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+
+This scalar is a description of an exact instant on the timeline such as the instant that a user account was created.
+
+# Input Coercion
+
+When expected as an input type, only RFC 3339 compliant date-time strings are accepted. All other input values raise a query error indicating an incorrect type.
+
+# Result Coercion
+
+Where an RFC 3339 compliant date-time string has a time-zone other than UTC, it is shifted to UTC.
+For example, the date-time string 2016-01-01T14:10:20+01:00 is shifted to 2016-01-01T13:10:20Z.
+"""
+scalar DateTime
+"""
+Search filter input for Boolean type.
+"""
+input MongoDBBooleanSearchFilterInput {
+	"""
+	The value is exactly the one given
+	"""
+	eq: Boolean
+	"""
+	The value is not the one given
+	"""
+	ne: Boolean
+	"""
+	The value is greater than the one given
+	"""
+	gt: Boolean
+	"""
+	The value is less than the one given
+	"""
+	lt: Boolean
+	"""
+	The value is greater than, or equal to the one given
+	"""
+	gte: Boolean
+	"""
+	The value is less than, or equal to the one given
+	"""
+	lte: Boolean
+	"""
+	The value does not match the filters.
+	"""
+	not: MongoDBBooleanSearchFilterInput
+	"""
+	The value is in the given array of values
+	"""
+	in: [Boolean]
+	"""
+	The value is not in the given array of values
+	"""
+	nin: [Boolean]
+	"""
+	The value exists in the document and is not null.
+	"""
+	exists: Boolean
+}
+"""
+Search filter input for Date type.
+"""
+input MongoDBDateSearchFilterInput {
+	"""
+	The value is exactly the one given
+	"""
+	eq: Date
+	"""
+	The value is not the one given
+	"""
+	ne: Date
+	"""
+	The value is greater than the one given
+	"""
+	gt: Date
+	"""
+	The value is less than the one given
+	"""
+	lt: Date
+	"""
+	The value is greater than, or equal to the one given
+	"""
+	gte: Date
+	"""
+	The value is less than, or equal to the one given
+	"""
+	lte: Date
+	"""
+	The value does not match the filters.
+	"""
+	not: MongoDBDateSearchFilterInput
+	"""
+	The value is in the given array of values
+	"""
+	in: [Date]
+	"""
+	The value is not in the given array of values
+	"""
+	nin: [Date]
+	"""
+	The value exists in the document and is not null.
+	"""
+	exists: Boolean
+}
+"""
+Search filter input for DateTime type.
+"""
+input MongoDBDateTimeSearchFilterInput {
+	"""
+	The value is exactly the one given
+	"""
+	eq: DateTime
+	"""
+	The value is not the one given
+	"""
+	ne: DateTime
+	"""
+	The value is greater than the one given
+	"""
+	gt: DateTime
+	"""
+	The value is less than the one given
+	"""
+	lt: DateTime
+	"""
+	The value is greater than, or equal to the one given
+	"""
+	gte: DateTime
+	"""
+	The value is less than, or equal to the one given
+	"""
+	lte: DateTime
+	"""
+	The value does not match the filters.
+	"""
+	not: MongoDBDateTimeSearchFilterInput
+	"""
+	The value is in the given array of values
+	"""
+	in: [DateTime]
+	"""
+	The value is not in the given array of values
+	"""
+	nin: [DateTime]
+	"""
+	The value exists in the document and is not null.
+	"""
+	exists: Boolean
+}
+"""
+Search filter input for ID type.
+"""
+input MongoDBIDSearchFilterInput {
+	"""
+	The value is exactly the one given
+	"""
+	eq: ID
+	"""
+	The value is not the one given
+	"""
+	ne: ID
+	"""
+	The value is greater than the one given
+	"""
+	gt: ID
+	"""
+	The value is less than the one given
+	"""
+	lt: ID
+	"""
+	The value is greater than, or equal to the one given
+	"""
+	gte: ID
+	"""
+	The value is less than, or equal to the one given
+	"""
+	lte: ID
+	"""
+	The value does not match the filters.
+	"""
+	not: MongoDBIDSearchFilterInput
+	"""
+	The value is in the given array of values
+	"""
+	in: [ID]
+	"""
+	The value is not in the given array of values
+	"""
+	nin: [ID]
+	"""
+	The value exists in the document and is not null.
+	"""
+	exists: Boolean
+}
+"""
+Search filter input for Int type.
+"""
+input MongoDBIntSearchFilterInput {
+	"""
+	The value is exactly the one given
+	"""
+	eq: Int
+	"""
+	The value is not the one given
+	"""
+	ne: Int
+	"""
+	The value is greater than the one given
+	"""
+	gt: Int
+	"""
+	The value is less than the one given
+	"""
+	lt: Int
+	"""
+	The value is greater than, or equal to the one given
+	"""
+	gte: Int
+	"""
+	The value is less than, or equal to the one given
+	"""
+	lte: Int
+	"""
+	The value does not match the filters.
+	"""
+	not: MongoDBIntSearchFilterInput
+	"""
+	The value is in the given array of values
+	"""
+	in: [Int]
+	"""
+	The value is not in the given array of values
+	"""
+	nin: [Int]
+	"""
+	The value exists in the document and is not null.
+	"""
+	exists: Boolean
+}
+type MongoDBMutation {
+	"""
+	Create a Solicitud
+	"""
+	solicitudCreate(input: SolicitudCreateInput!): SolicitudCreatePayload
+	"""
+	Delete a unique Solicitud
+	"""
+	solicitudDelete(by: SolicitudByInput!): SolicitudDeletePayload
+	"""
+	Delete many Solicituds
+	"""
+	solicitudDeleteMany(filter: SolicitudCollection!): SolicitudDeletePayload
+	"""
+	Create multiple Solicituds
+	"""
+	solicitudCreateMany(input: [SolicitudCreateInput!]!): SolicitudCreateManyPayload
+	"""
+	Update a unique Solicitud
+	"""
+	solicitudUpdate(by: SolicitudByInput!, input: SolicitudUpdateInput!): SolicitudUpdatePayload
+	"""
+	Update many Solicituds
+	"""
+	solicitudUpdateMany(filter: SolicitudCollection!, input: SolicitudUpdateInput!): SolicitudUpdatePayload
+	"""
+	Create a User
+	"""
+	userCreate(input: UserCreateInput!): UserCreatePayload
+	"""
+	Delete a unique User
+	"""
+	userDelete(by: UserByInput!): UserDeletePayload
+	"""
+	Delete many Users
+	"""
+	userDeleteMany(filter: UserCollection!): UserDeletePayload
+	"""
+	Create multiple Users
+	"""
+	userCreateMany(input: [UserCreateInput!]!): UserCreateManyPayload
+	"""
+	Update a unique User
+	"""
+	userUpdate(by: UserByInput!, input: UserUpdateInput!): UserUpdatePayload
+	"""
+	Update many Users
+	"""
+	userUpdateMany(filter: UserCollection!, input: UserUpdateInput!): UserUpdatePayload
+	"""
+	Create a Rol
+	"""
+	rolCreate(input: RolCreateInput!): RolCreatePayload
+	"""
+	Delete a unique Rol
+	"""
+	rolDelete(by: RolByInput!): RolDeletePayload
+	"""
+	Delete many Rols
+	"""
+	rolDeleteMany(filter: RolCollection!): RolDeletePayload
+	"""
+	Create multiple Rols
+	"""
+	rolCreateMany(input: [RolCreateInput!]!): RolCreateManyPayload
+	"""
+	Update a unique Rol
+	"""
+	rolUpdate(by: RolByInput!, input: RolUpdateInput!): RolUpdatePayload
+	"""
+	Update many Rols
+	"""
+	rolUpdateMany(filter: RolCollection!, input: RolUpdateInput!): RolUpdatePayload
+	"""
+	Create a Sponsor
+	"""
+	sponsorCreate(input: SponsorCreateInput!): SponsorCreatePayload
+	"""
+	Delete a unique Sponsor
+	"""
+	sponsorDelete(by: SponsorByInput!): SponsorDeletePayload
+	"""
+	Delete many Sponsors
+	"""
+	sponsorDeleteMany(filter: SponsorCollection!): SponsorDeletePayload
+	"""
+	Create multiple Sponsors
+	"""
+	sponsorCreateMany(input: [SponsorCreateInput!]!): SponsorCreateManyPayload
+	"""
+	Update a unique Sponsor
+	"""
+	sponsorUpdate(by: SponsorByInput!, input: SponsorUpdateInput!): SponsorUpdatePayload
+	"""
+	Update many Sponsors
+	"""
+	sponsorUpdateMany(filter: SponsorCollection!, input: SponsorUpdateInput!): SponsorUpdatePayload
+	"""
+	Create a Convenio
+	"""
+	convenioCreate(input: ConvenioCreateInput!): ConvenioCreatePayload
+	"""
+	Delete a unique Convenio
+	"""
+	convenioDelete(by: ConvenioByInput!): ConvenioDeletePayload
+	"""
+	Delete many Convenios
+	"""
+	convenioDeleteMany(filter: ConvenioCollection!): ConvenioDeletePayload
+	"""
+	Create multiple Convenios
+	"""
+	convenioCreateMany(input: [ConvenioCreateInput!]!): ConvenioCreateManyPayload
+	"""
+	Update a unique Convenio
+	"""
+	convenioUpdate(by: ConvenioByInput!, input: ConvenioUpdateInput!): ConvenioUpdatePayload
+	"""
+	Update many Convenios
+	"""
+	convenioUpdateMany(filter: ConvenioCollection!, input: ConvenioUpdateInput!): ConvenioUpdatePayload
+	"""
+	Create a Viaje
+	"""
+	viajeCreate(input: ViajeCreateInput!): ViajeCreatePayload
+	"""
+	Delete a unique Viaje
+	"""
+	viajeDelete(by: ViajeByInput!): ViajeDeletePayload
+	"""
+	Delete many Viajes
+	"""
+	viajeDeleteMany(filter: ViajeCollection!): ViajeDeletePayload
+	"""
+	Create multiple Viajes
+	"""
+	viajeCreateMany(input: [ViajeCreateInput!]!): ViajeCreateManyPayload
+	"""
+	Update a unique Viaje
+	"""
+	viajeUpdate(by: ViajeByInput!, input: ViajeUpdateInput!): ViajeUpdatePayload
+	"""
+	Update many Viajes
+	"""
+	viajeUpdateMany(filter: ViajeCollection!, input: ViajeUpdateInput!): ViajeUpdatePayload
+	"""
+	Create a ViajeItinerario
+	"""
+	viajeItinerarioCreate(input: ViajeItinerarioCreateInput!): ViajeItinerarioCreatePayload
+	"""
+	Delete a unique ViajeItinerario
+	"""
+	viajeItinerarioDelete(by: ViajeItinerarioByInput!): ViajeItinerarioDeletePayload
+	"""
+	Delete many ViajeItinerarios
+	"""
+	viajeItinerarioDeleteMany(filter: ViajeItinerarioCollection!): ViajeItinerarioDeletePayload
+	"""
+	Create multiple ViajeItinerarios
+	"""
+	viajeItinerarioCreateMany(input: [ViajeItinerarioCreateInput!]!): ViajeItinerarioCreateManyPayload
+	"""
+	Update a unique ViajeItinerario
+	"""
+	viajeItinerarioUpdate(by: ViajeItinerarioByInput!, input: ViajeItinerarioUpdateInput!): ViajeItinerarioUpdatePayload
+	"""
+	Update many ViajeItinerarios
+	"""
+	viajeItinerarioUpdateMany(filter: ViajeItinerarioCollection!, input: ViajeItinerarioUpdateInput!): ViajeItinerarioUpdatePayload
+	"""
+	Create a ViajeUsuario
+	"""
+	viajeUsuarioCreate(input: ViajeUsuarioCreateInput!): ViajeUsuarioCreatePayload
+	"""
+	Delete a unique ViajeUsuario
+	"""
+	viajeUsuarioDelete(by: ViajeUsuarioByInput!): ViajeUsuarioDeletePayload
+	"""
+	Delete many ViajeUsuarios
+	"""
+	viajeUsuarioDeleteMany(filter: ViajeUsuarioCollection!): ViajeUsuarioDeletePayload
+	"""
+	Create multiple ViajeUsuarios
+	"""
+	viajeUsuarioCreateMany(input: [ViajeUsuarioCreateInput!]!): ViajeUsuarioCreateManyPayload
+	"""
+	Update a unique ViajeUsuario
+	"""
+	viajeUsuarioUpdate(by: ViajeUsuarioByInput!, input: ViajeUsuarioUpdateInput!): ViajeUsuarioUpdatePayload
+	"""
+	Update many ViajeUsuarios
+	"""
+	viajeUsuarioUpdateMany(filter: ViajeUsuarioCollection!, input: ViajeUsuarioUpdateInput!): ViajeUsuarioUpdatePayload
+}
+"""
+Update input for String type.
+"""
+input MongoDBOptionalStringUpdateInput {
+	"""
+	Replaces the value of a field with the specified value.
+	"""
+	set: String
+	"""
+	Deletes a particular field.
+	"""
+	unset: Boolean
+}
+type MongoDBQuery {
+	"""
+	Query a single Solicitud by a field
+	"""
+	solicitud(by: SolicitudByInput!): Solicitud
+	"""
+	Paginated query to fetch the whole list of Solicitud
+	"""
+	solicitudCollection(filter: SolicitudCollection, first: Int, last: Int, before: String, after: String, orderBy: [SolicitudOrderByInput]): SolicitudConnection
+	"""
+	Query a single User by a field
+	"""
+	user(by: UserByInput!): User
+	"""
+	Paginated query to fetch the whole list of User
+	"""
+	userCollection(filter: UserCollection, first: Int, last: Int, before: String, after: String, orderBy: [UserOrderByInput]): UserConnection
+	"""
+	Query a single Rol by a field
+	"""
+	rol(by: RolByInput!): Rol
+	"""
+	Paginated query to fetch the whole list of Rol
+	"""
+	rolCollection(filter: RolCollection, first: Int, last: Int, before: String, after: String, orderBy: [RolOrderByInput]): RolConnection
+	"""
+	Query a single Sponsor by a field
+	"""
+	sponsor(by: SponsorByInput!): Sponsor
+	"""
+	Paginated query to fetch the whole list of Sponsor
+	"""
+	sponsorCollection(filter: SponsorCollection, first: Int, last: Int, before: String, after: String, orderBy: [SponsorOrderByInput]): SponsorConnection
+	"""
+	Query a single Convenio by a field
+	"""
+	convenio(by: ConvenioByInput!): Convenio
+	"""
+	Paginated query to fetch the whole list of Convenio
+	"""
+	convenioCollection(filter: ConvenioCollection, first: Int, last: Int, before: String, after: String, orderBy: [ConvenioOrderByInput]): ConvenioConnection
+	"""
+	Query a single Viaje by a field
+	"""
+	viaje(by: ViajeByInput!): Viaje
+	"""
+	Paginated query to fetch the whole list of Viaje
+	"""
+	viajeCollection(filter: ViajeCollection, first: Int, last: Int, before: String, after: String, orderBy: [ViajeOrderByInput]): ViajeConnection
+	"""
+	Query a single ViajeItinerario by a field
+	"""
+	viajeItinerario(by: ViajeItinerarioByInput!): ViajeItinerario
+	"""
+	Paginated query to fetch the whole list of ViajeItinerario
+	"""
+	viajeItinerarioCollection(filter: ViajeItinerarioCollection, first: Int, last: Int, before: String, after: String, orderBy: [ViajeItinerarioOrderByInput]): ViajeItinerarioConnection
+	"""
+	Query a single ViajeUsuario by a field
+	"""
+	viajeUsuario(by: ViajeUsuarioByInput!): ViajeUsuario
+	"""
+	Paginated query to fetch the whole list of ViajeUsuario
+	"""
+	viajeUsuarioCollection(filter: ViajeUsuarioCollection, first: Int, last: Int, before: String, after: String, orderBy: [ViajeUsuarioOrderByInput]): ViajeUsuarioConnection
+}
+"""
+Update input for Boolean type.
+"""
+input MongoDBRequiredBooleanUpdateInput {
+	"""
+	Replaces the value of a field with the specified value.
+	"""
+	set: Boolean
+}
+"""
+Update input for DateTime type.
+"""
+input MongoDBRequiredDateTimeUpdateInput {
+	"""
+	Replaces the value of a field with the specified value.
+	"""
+	set: DateTime
+	"""
+	Sets the field value to the current DateTime.
+	"""
+	currentDate: Boolean
+}
+"""
+Update input for Date type.
+"""
+input MongoDBRequiredDateUpdateInput {
+	"""
+	Replaces the value of a field with the specified value.
+	"""
+	set: Date
+	"""
+	Sets the field value to the current Date.
+	"""
+	currentDate: Boolean
+}
+"""
+Update input for Int type.
+"""
+input MongoDBRequiredIntUpdateInput {
+	"""
+	Increments the value of the field by the specified amount.
+	"""
+	increment: Int
+	"""
+	Only updates the field if the specified value is less than the existing field value.
+	"""
+	minimum: Int
+	"""
+	Only updates the field if the specified value is greater than the existing field value.
+	"""
+	maximum: Int
+	"""
+	Multiplies the value of the field by the specified amount.
+	"""
+	multiply: Int
+	"""
+	Replaces the value of a field with the specified value.
+	"""
+	set: Int
+}
+"""
+Update input for String type.
+"""
+input MongoDBRequiredStringUpdateInput {
+	"""
+	Replaces the value of a field with the specified value.
+	"""
+	set: String
+}
+"""
+Update input for URL type.
+"""
+input MongoDBRequiredURLUpdateInput {
+	"""
+	Replaces the value of a field with the specified value.
+	"""
+	set: URL
+}
+"""
+Search filter input for String type.
+"""
+input MongoDBStringSearchFilterInput {
+	"""
+	The value is exactly the one given
+	"""
+	eq: String
+	"""
+	The value is not the one given
+	"""
+	ne: String
+	"""
+	The value is greater than the one given
+	"""
+	gt: String
+	"""
+	The value is less than the one given
+	"""
+	lt: String
+	"""
+	The value is greater than, or equal to the one given
+	"""
+	gte: String
+	"""
+	The value is less than, or equal to the one given
+	"""
+	lte: String
+	"""
+	The value does not match the filters.
+	"""
+	not: MongoDBStringSearchFilterInput
+	"""
+	The value is in the given array of values
+	"""
+	in: [String]
+	"""
+	The value is not in the given array of values
+	"""
+	nin: [String]
+	"""
+	The value exists in the document and is not null.
+	"""
+	exists: Boolean
+}
+"""
+Search filter input for URL type.
+"""
+input MongoDBURLSearchFilterInput {
+	"""
+	The value is exactly the one given
+	"""
+	eq: URL
+	"""
+	The value is not the one given
+	"""
+	ne: URL
+	"""
+	The value is greater than the one given
+	"""
+	gt: URL
+	"""
+	The value is less than the one given
+	"""
+	lt: URL
+	"""
+	The value is greater than, or equal to the one given
+	"""
+	gte: URL
+	"""
+	The value is less than, or equal to the one given
+	"""
+	lte: URL
+	"""
+	The value does not match the filters.
+	"""
+	not: MongoDBURLSearchFilterInput
+	"""
+	The value is in the given array of values
+	"""
+	in: [URL]
+	"""
+	The value is not in the given array of values
+	"""
+	nin: [URL]
+	"""
+	The value exists in the document and is not null.
+	"""
+	exists: Boolean
+}
+enum MongoOrderByDirection {
+	ASC
+	DESC
+}
+type Mutation {
+	mongoDB: MongoDBMutation
+}
+type PageInfo {
+	hasPreviousPage: Boolean!
+	hasNextPage: Boolean!
+	startCursor: String
+	endCursor: String
+}
+type Query {
+	mongoDB: MongoDBQuery
+	helloWorld: String!
+}
+type Rol {
+	"""
+	Unique identifier
+	"""
+	id: ID!
+	name: String!
+	estado: Int!
+}
+input RolByInput {
+	id: ID
+}
+input RolCollection {
+	id: MongoDBIDSearchFilterInput
+	"""
+	All of the filters must match
+	"""
+	ALL: [RolCollection]
+	"""
+	None of the filters must match
+	"""
+	NONE: [RolCollection]
+	"""
+	At least one of the filters must match
+	"""
+	ANY: [RolCollection]
+	name: MongoDBStringSearchFilterInput
+	estado: MongoDBIntSearchFilterInput
+}
+type RolConnection {
+	"""
+	Information to aid in pagination
+	"""
+	pageInfo: PageInfo!
+	edges: [RolEdge]
+}
+"""
+Input to create a Rol
+"""
+input RolCreateInput {
+	id: ID
+	name: String!
+	estado: Int! = 1
+}
+type RolCreateManyPayload {
+	insertedIds: [ID]
+}
+type RolCreatePayload {
+	insertedId: ID
+}
+type RolDeletePayload {
+	deletedCount: Int
+}
+type RolEdge {
+	node: Rol!
+	cursor: String!
+}
+input RolOrderByInput {
+	id: MongoOrderByDirection
+	name: MongoOrderByDirection
+	estado: MongoOrderByDirection
+}
+input RolUpdateInput {
+	name: MongoDBRequiredStringUpdateInput
+	estado: MongoDBRequiredIntUpdateInput
+}
+type RolUpdatePayload {
+	matchedCount: Int
+	modifiedCount: Int
+}
+type Solicitud {
+	"""
+	Unique identifier
+	"""
+	id: ID!
+	dni: String!
+	nombre: String!
+	correoElectronico: String!
+	apellidos: String!
+	celular: String!
+	fechaNacimiento: Date!
+	facebookUrl: String!
+	Provincia: String!
+	Distrito: String!
+	ModeloHyundai: String!
+	AnoFab: String!
+	Placa: String!
+	VehiculoPropio: Boolean!
+	NombrePropietarios: String!
+	ParentescoPropetario: String!
+	MantenimientoConcesionarios: Boolean!
+	estadoAtendido: Boolean!
+	fechaRegistro: DateTime!
+}
+input SolicitudByInput {
+	id: ID
+	dni: String
+	correoElectronico: String
+	Placa: String
+}
+input SolicitudCollection {
+	id: MongoDBIDSearchFilterInput
+	"""
+	All of the filters must match
+	"""
+	ALL: [SolicitudCollection]
+	"""
+	None of the filters must match
+	"""
+	NONE: [SolicitudCollection]
+	"""
+	At least one of the filters must match
+	"""
+	ANY: [SolicitudCollection]
+	dni: MongoDBStringSearchFilterInput
+	nombre: MongoDBStringSearchFilterInput
+	correoElectronico: MongoDBStringSearchFilterInput
+	apellidos: MongoDBStringSearchFilterInput
+	celular: MongoDBStringSearchFilterInput
+	fechaNacimiento: MongoDBDateSearchFilterInput
+	facebookUrl: MongoDBStringSearchFilterInput
+	Provincia: MongoDBStringSearchFilterInput
+	Distrito: MongoDBStringSearchFilterInput
+	ModeloHyundai: MongoDBStringSearchFilterInput
+	AnoFab: MongoDBStringSearchFilterInput
+	Placa: MongoDBStringSearchFilterInput
+	VehiculoPropio: MongoDBBooleanSearchFilterInput
+	NombrePropietarios: MongoDBStringSearchFilterInput
+	ParentescoPropetario: MongoDBStringSearchFilterInput
+	MantenimientoConcesionarios: MongoDBBooleanSearchFilterInput
+	estadoAtendido: MongoDBBooleanSearchFilterInput
+	fechaRegistro: MongoDBDateTimeSearchFilterInput
+}
+type SolicitudConnection {
+	"""
+	Information to aid in pagination
+	"""
+	pageInfo: PageInfo!
+	edges: [SolicitudEdge]
+}
+"""
+Input to create a Solicitud
+"""
+input SolicitudCreateInput {
+	id: ID
+	dni: String!
+	nombre: String!
+	correoElectronico: String!
+	apellidos: String!
+	celular: String!
+	fechaNacimiento: Date!
+	facebookUrl: String!
+	Provincia: String!
+	Distrito: String!
+	ModeloHyundai: String!
+	AnoFab: String!
+	Placa: String!
+	VehiculoPropio: Boolean!
+	NombrePropietarios: String!
+	ParentescoPropetario: String!
+	MantenimientoConcesionarios: Boolean!
+	estadoAtendido: Boolean! = false
+	fechaRegistro: DateTime! = "2023-12-20T20:42:42Z"
+}
+type SolicitudCreateManyPayload {
+	insertedIds: [ID]
+}
+type SolicitudCreatePayload {
+	insertedId: ID
+}
+type SolicitudDeletePayload {
+	deletedCount: Int
+}
+type SolicitudEdge {
+	node: Solicitud!
+	cursor: String!
+}
+input SolicitudOrderByInput {
+	id: MongoOrderByDirection
+	dni: MongoOrderByDirection
+	nombre: MongoOrderByDirection
+	correoElectronico: MongoOrderByDirection
+	apellidos: MongoOrderByDirection
+	celular: MongoOrderByDirection
+	fechaNacimiento: MongoOrderByDirection
+	facebookUrl: MongoOrderByDirection
+	Provincia: MongoOrderByDirection
+	Distrito: MongoOrderByDirection
+	ModeloHyundai: MongoOrderByDirection
+	AnoFab: MongoOrderByDirection
+	Placa: MongoOrderByDirection
+	VehiculoPropio: MongoOrderByDirection
+	NombrePropietarios: MongoOrderByDirection
+	ParentescoPropetario: MongoOrderByDirection
+	MantenimientoConcesionarios: MongoOrderByDirection
+	estadoAtendido: MongoOrderByDirection
+	fechaRegistro: MongoOrderByDirection
+}
+input SolicitudUpdateInput {
+	dni: MongoDBRequiredStringUpdateInput
+	nombre: MongoDBRequiredStringUpdateInput
+	correoElectronico: MongoDBRequiredStringUpdateInput
+	apellidos: MongoDBRequiredStringUpdateInput
+	celular: MongoDBRequiredStringUpdateInput
+	fechaNacimiento: MongoDBRequiredDateUpdateInput
+	facebookUrl: MongoDBRequiredStringUpdateInput
+	Provincia: MongoDBRequiredStringUpdateInput
+	Distrito: MongoDBRequiredStringUpdateInput
+	ModeloHyundai: MongoDBRequiredStringUpdateInput
+	AnoFab: MongoDBRequiredStringUpdateInput
+	Placa: MongoDBRequiredStringUpdateInput
+	VehiculoPropio: MongoDBRequiredBooleanUpdateInput
+	NombrePropietarios: MongoDBRequiredStringUpdateInput
+	ParentescoPropetario: MongoDBRequiredStringUpdateInput
+	MantenimientoConcesionarios: MongoDBRequiredBooleanUpdateInput
+	estadoAtendido: MongoDBRequiredBooleanUpdateInput
+	fechaRegistro: MongoDBRequiredDateTimeUpdateInput
+}
+type SolicitudUpdatePayload {
+	matchedCount: Int
+	modifiedCount: Int
+}
+type Sponsor {
+	"""
+	Unique identifier
+	"""
+	id: ID!
+	name: String!
+	logoUrl: URL!
+	description: String
+	beneficio: String
+	estado: Int!
+}
+input SponsorByInput {
+	id: ID
+}
+input SponsorCollection {
+	id: MongoDBIDSearchFilterInput
+	"""
+	All of the filters must match
+	"""
+	ALL: [SponsorCollection]
+	"""
+	None of the filters must match
+	"""
+	NONE: [SponsorCollection]
+	"""
+	At least one of the filters must match
+	"""
+	ANY: [SponsorCollection]
+	name: MongoDBStringSearchFilterInput
+	logoUrl: MongoDBURLSearchFilterInput
+	description: MongoDBStringSearchFilterInput
+	beneficio: MongoDBStringSearchFilterInput
+	estado: MongoDBIntSearchFilterInput
+}
+type SponsorConnection {
+	"""
+	Information to aid in pagination
+	"""
+	pageInfo: PageInfo!
+	edges: [SponsorEdge]
+}
+"""
+Input to create a Sponsor
+"""
+input SponsorCreateInput {
+	id: ID
+	name: String!
+	logoUrl: URL! = "https://sportwagen-peru.com/wp-content/uploads/2021/04/logotipo-sportwagen-hyundai.png"
+	description: String
+	beneficio: String
+	estado: Int! = 1
+}
+type SponsorCreateManyPayload {
+	insertedIds: [ID]
+}
+type SponsorCreatePayload {
+	insertedId: ID
+}
+type SponsorDeletePayload {
+	deletedCount: Int
+}
+type SponsorEdge {
+	node: Sponsor!
+	cursor: String!
+}
+input SponsorOrderByInput {
+	id: MongoOrderByDirection
+	name: MongoOrderByDirection
+	logoUrl: MongoOrderByDirection
+	description: MongoOrderByDirection
+	beneficio: MongoOrderByDirection
+	estado: MongoOrderByDirection
+}
+input SponsorUpdateInput {
+	name: MongoDBRequiredStringUpdateInput
+	logoUrl: MongoDBRequiredURLUpdateInput
+	description: MongoDBOptionalStringUpdateInput
+	beneficio: MongoDBOptionalStringUpdateInput
+	estado: MongoDBRequiredIntUpdateInput
+}
+type SponsorUpdatePayload {
+	matchedCount: Int
+	modifiedCount: Int
+}
+"""
+An URL as defined by RFC1738. For example, `https://grafbase.com/foo/` or `mailto:example@grafbase.com`.
+"""
+scalar URL
+type User {
+	"""
+	Unique identifier
+	"""
+	id: ID!
+	name: String!
+	email: String!
+	rol: String!
+	misViajes: Int!
+	misRecorridosKM: Int!
+	ModeloHyundai: String
+	Placa: String
+	avatarUrl: URL!
+	description: String
+}
+input UserByInput {
+	id: ID
+	email: String
+}
+input UserCollection {
+	id: MongoDBIDSearchFilterInput
+	"""
+	All of the filters must match
+	"""
+	ALL: [UserCollection]
+	"""
+	None of the filters must match
+	"""
+	NONE: [UserCollection]
+	"""
+	At least one of the filters must match
+	"""
+	ANY: [UserCollection]
+	name: MongoDBStringSearchFilterInput
+	email: MongoDBStringSearchFilterInput
+	rol: MongoDBStringSearchFilterInput
+	misViajes: MongoDBIntSearchFilterInput
+	misRecorridosKM: MongoDBIntSearchFilterInput
+	ModeloHyundai: MongoDBStringSearchFilterInput
+	Placa: MongoDBStringSearchFilterInput
+	avatarUrl: MongoDBURLSearchFilterInput
+	description: MongoDBStringSearchFilterInput
+}
+type UserConnection {
+	"""
+	Information to aid in pagination
+	"""
+	pageInfo: PageInfo!
+	edges: [UserEdge]
+}
+"""
+Input to create a User
+"""
+input UserCreateInput {
+	id: ID
+	name: String!
+	email: String!
+	rol: String! = "EXTERNO"
+	misViajes: Int! = 0
+	misRecorridosKM: Int! = 0
+	ModeloHyundai: String
+	Placa: String
+	avatarUrl: URL! = "https://platform.cstatic-images.com/xlarge/in/v2/stock_photos/6f0dbf3e-2116-4750-ba5a-004d7ca279e3/9ae25e54-167c-47c8-aa82-e024cd6fcaf4.png"
+	description: String
+}
+type UserCreateManyPayload {
+	insertedIds: [ID]
+}
+type UserCreatePayload {
+	insertedId: ID
+}
+type UserDeletePayload {
+	deletedCount: Int
+}
+type UserEdge {
+	node: User!
+	cursor: String!
+}
+input UserOrderByInput {
+	id: MongoOrderByDirection
+	name: MongoOrderByDirection
+	email: MongoOrderByDirection
+	rol: MongoOrderByDirection
+	misViajes: MongoOrderByDirection
+	misRecorridosKM: MongoOrderByDirection
+	ModeloHyundai: MongoOrderByDirection
+	Placa: MongoOrderByDirection
+	avatarUrl: MongoOrderByDirection
+	description: MongoOrderByDirection
+}
+input UserUpdateInput {
+	name: MongoDBRequiredStringUpdateInput
+	email: MongoDBRequiredStringUpdateInput
+	rol: MongoDBRequiredStringUpdateInput
+	misViajes: MongoDBRequiredIntUpdateInput
+	misRecorridosKM: MongoDBRequiredIntUpdateInput
+	ModeloHyundai: MongoDBOptionalStringUpdateInput
+	Placa: MongoDBOptionalStringUpdateInput
+	avatarUrl: MongoDBRequiredURLUpdateInput
+	description: MongoDBOptionalStringUpdateInput
+}
+type UserUpdatePayload {
+	matchedCount: Int
+	modifiedCount: Int
+}
+type Viaje {
+	"""
+	Unique identifier
+	"""
+	id: ID!
+	title: String!
+	description: String!
+	maxInscripciones: Int!
+	inscripcionesActuales: Int!
+	Fecha: String!
+	Ruta: String!
+	TiempoDeViaje: String!
+	RecorridoKM: String!
+	BrochureURL: String!
+}
+input ViajeByInput {
+	id: ID
+}
+input ViajeCollection {
+	id: MongoDBIDSearchFilterInput
+	"""
+	All of the filters must match
+	"""
+	ALL: [ViajeCollection]
+	"""
+	None of the filters must match
+	"""
+	NONE: [ViajeCollection]
+	"""
+	At least one of the filters must match
+	"""
+	ANY: [ViajeCollection]
+	title: MongoDBStringSearchFilterInput
+	description: MongoDBStringSearchFilterInput
+	maxInscripciones: MongoDBIntSearchFilterInput
+	inscripcionesActuales: MongoDBIntSearchFilterInput
+	Fecha: MongoDBStringSearchFilterInput
+	Ruta: MongoDBStringSearchFilterInput
+	TiempoDeViaje: MongoDBStringSearchFilterInput
+	RecorridoKM: MongoDBStringSearchFilterInput
+	BrochureURL: MongoDBStringSearchFilterInput
+}
+type ViajeConnection {
+	"""
+	Information to aid in pagination
+	"""
+	pageInfo: PageInfo!
+	edges: [ViajeEdge]
+}
+"""
+Input to create a Viaje
+"""
+input ViajeCreateInput {
+	id: ID
+	title: String!
+	description: String!
+	maxInscripciones: Int!
+	inscripcionesActuales: Int!
+	Fecha: String!
+	Ruta: String!
+	TiempoDeViaje: String!
+	RecorridoKM: String!
+	BrochureURL: String!
+}
+type ViajeCreateManyPayload {
+	insertedIds: [ID]
+}
+type ViajeCreatePayload {
+	insertedId: ID
+}
+type ViajeDeletePayload {
+	deletedCount: Int
+}
+type ViajeEdge {
+	node: Viaje!
+	cursor: String!
+}
+type ViajeItinerario {
+	"""
+	Unique identifier
+	"""
+	id: ID!
+	title: String!
+	description: String!
+	horas: String!
+	kilometraje: String!
+	mapURLGoogle: String!
+	viajeId: String!
+	order: Int!
+}
+input ViajeItinerarioByInput {
+	id: ID
+}
+input ViajeItinerarioCollection {
+	id: MongoDBIDSearchFilterInput
+	"""
+	All of the filters must match
+	"""
+	ALL: [ViajeItinerarioCollection]
+	"""
+	None of the filters must match
+	"""
+	NONE: [ViajeItinerarioCollection]
+	"""
+	At least one of the filters must match
+	"""
+	ANY: [ViajeItinerarioCollection]
+	title: MongoDBStringSearchFilterInput
+	description: MongoDBStringSearchFilterInput
+	horas: MongoDBStringSearchFilterInput
+	kilometraje: MongoDBStringSearchFilterInput
+	mapURLGoogle: MongoDBStringSearchFilterInput
+	viajeId: MongoDBStringSearchFilterInput
+	order: MongoDBIntSearchFilterInput
+}
+type ViajeItinerarioConnection {
+	"""
+	Information to aid in pagination
+	"""
+	pageInfo: PageInfo!
+	edges: [ViajeItinerarioEdge]
+}
+"""
+Input to create a ViajeItinerario
+"""
+input ViajeItinerarioCreateInput {
+	id: ID
+	title: String!
+	description: String!
+	horas: String!
+	kilometraje: String!
+	mapURLGoogle: String!
+	viajeId: String!
+	order: Int!
+}
+type ViajeItinerarioCreateManyPayload {
+	insertedIds: [ID]
+}
+type ViajeItinerarioCreatePayload {
+	insertedId: ID
+}
+type ViajeItinerarioDeletePayload {
+	deletedCount: Int
+}
+type ViajeItinerarioEdge {
+	node: ViajeItinerario!
+	cursor: String!
+}
+input ViajeItinerarioOrderByInput {
+	id: MongoOrderByDirection
+	title: MongoOrderByDirection
+	description: MongoOrderByDirection
+	horas: MongoOrderByDirection
+	kilometraje: MongoOrderByDirection
+	mapURLGoogle: MongoOrderByDirection
+	viajeId: MongoOrderByDirection
+	order: MongoOrderByDirection
+}
+input ViajeItinerarioUpdateInput {
+	title: MongoDBRequiredStringUpdateInput
+	description: MongoDBRequiredStringUpdateInput
+	horas: MongoDBRequiredStringUpdateInput
+	kilometraje: MongoDBRequiredStringUpdateInput
+	mapURLGoogle: MongoDBRequiredStringUpdateInput
+	viajeId: MongoDBRequiredStringUpdateInput
+	order: MongoDBRequiredIntUpdateInput
+}
+type ViajeItinerarioUpdatePayload {
+	matchedCount: Int
+	modifiedCount: Int
+}
+input ViajeOrderByInput {
+	id: MongoOrderByDirection
+	title: MongoOrderByDirection
+	description: MongoOrderByDirection
+	maxInscripciones: MongoOrderByDirection
+	inscripcionesActuales: MongoOrderByDirection
+	Fecha: MongoOrderByDirection
+	Ruta: MongoOrderByDirection
+	TiempoDeViaje: MongoOrderByDirection
+	RecorridoKM: MongoOrderByDirection
+	BrochureURL: MongoOrderByDirection
+}
+input ViajeUpdateInput {
+	title: MongoDBRequiredStringUpdateInput
+	description: MongoDBRequiredStringUpdateInput
+	maxInscripciones: MongoDBRequiredIntUpdateInput
+	inscripcionesActuales: MongoDBRequiredIntUpdateInput
+	Fecha: MongoDBRequiredStringUpdateInput
+	Ruta: MongoDBRequiredStringUpdateInput
+	TiempoDeViaje: MongoDBRequiredStringUpdateInput
+	RecorridoKM: MongoDBRequiredStringUpdateInput
+	BrochureURL: MongoDBRequiredStringUpdateInput
+}
+type ViajeUpdatePayload {
+	matchedCount: Int
+	modifiedCount: Int
+}
+type ViajeUsuario {
+	"""
+	Unique identifier
+	"""
+	id: ID!
+	viajeId: String!
+	userId: String!
+	estado: Int!
+}
+input ViajeUsuarioByInput {
+	id: ID
+}
+input ViajeUsuarioCollection {
+	id: MongoDBIDSearchFilterInput
+	"""
+	All of the filters must match
+	"""
+	ALL: [ViajeUsuarioCollection]
+	"""
+	None of the filters must match
+	"""
+	NONE: [ViajeUsuarioCollection]
+	"""
+	At least one of the filters must match
+	"""
+	ANY: [ViajeUsuarioCollection]
+	viajeId: MongoDBStringSearchFilterInput
+	userId: MongoDBStringSearchFilterInput
+	estado: MongoDBIntSearchFilterInput
+}
+type ViajeUsuarioConnection {
+	"""
+	Information to aid in pagination
+	"""
+	pageInfo: PageInfo!
+	edges: [ViajeUsuarioEdge]
+}
+"""
+Input to create a ViajeUsuario
+"""
+input ViajeUsuarioCreateInput {
+	id: ID
+	viajeId: String!
+	userId: String!
+	estado: Int! = 1
+}
+type ViajeUsuarioCreateManyPayload {
+	insertedIds: [ID]
+}
+type ViajeUsuarioCreatePayload {
+	insertedId: ID
+}
+type ViajeUsuarioDeletePayload {
+	deletedCount: Int
+}
+type ViajeUsuarioEdge {
+	node: ViajeUsuario!
+	cursor: String!
+}
+input ViajeUsuarioOrderByInput {
+	id: MongoOrderByDirection
+	viajeId: MongoOrderByDirection
+	userId: MongoOrderByDirection
+	estado: MongoOrderByDirection
+}
+input ViajeUsuarioUpdateInput {
+	viajeId: MongoDBRequiredStringUpdateInput
+	userId: MongoDBRequiredStringUpdateInput
+	estado: MongoDBRequiredIntUpdateInput
+}
+type ViajeUsuarioUpdatePayload {
+	matchedCount: Int
+	modifiedCount: Int
+}
+schema {
+	query: Query
+	mutation: Mutation
+}
+
