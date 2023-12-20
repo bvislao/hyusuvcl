@@ -1,16 +1,28 @@
 export const getUserQuery = `
-query User($email:String!) {
-  user(by: {email:$email}) {
-    name
-    email
-    rol
-    ModeloHyundai
-    Placa
-    avatarUrl
-    description
-    id
+query MongoDB($email: String!) {
+  mongoDB {
+    userCollection(
+      filter: { email: { eq: $email } }
+      first: 10
+    ) {
+      edges {
+        node {
+          id
+          name
+          email
+          rol
+          misViajes
+          misRecorridosKM
+          ModeloHyundai
+          Placa
+          avatarUrl
+          description
+        }
+      }
+    }
   }
 }
+
 `;
 
 
@@ -25,50 +37,20 @@ query User($email:String!) {
 
 */
 export const updateUserMutation = `
-mutation UpdateUser($name:String!,
-	$email:String!,
-	$rol:String!,
-	$ModeloHyundai:String!,
-	$Placa:String!,
-){
-	userUpdate(by: {	email:$email,} ,input : {
-		name:$name,	
-		rol:$rol,
-		ModeloHyundai:$ModeloHyundai
-		Placa:$Placa
-	}){
-		user{
-			name
-    email
-    rol
-    ModeloHyundai
-    Placa
-    avatarUrl
-    description
-    id
-    updatedAt
-    createdAt
-		}
-	}
-}
 `;
 
 export const createUserMutation = `
-mutation UserCreate($name:String!,$email:String!) {
-  userCreate(input: {
-    email:$email,
-    name:$name
-  }) {
-    user {
-      name
-      email
-      rol
-      ModeloHyundai
-      Placa
-      avatarUrl
-      description
+mutation MongoDB($name:String!,$email:String!,
+$rol:String!,$ModeloHyundai:String!,$Placa:String!){
+  mongoDB {
+    userCreate(input: {
+        name:$name,
+        email:$email ,rol:$rol
+    }) {
+      insertedId
     }
   }
+}
 `;
 
 
@@ -78,17 +60,17 @@ mutation UserCreate($name:String!,$email:String!) {
 }
 */
 export const atenderSolicitudOK = `
-mutation SolicitudUpdate (
-  $dni:String!
-){
-  solicitudUpdate(by: {dni:$dni}, input: {
-    estadoAtendido:true
-  }) {
-    solicitud {
-      dni
-      estadoAtendido
-      nombre
-      correoElectronico
+mutation MongoDB($dni:String!) {
+  mongoDB {
+    solicitudUpdate(by: {
+      dni:$dni
+    }, input: {
+      estadoAtendido:{
+        set:true
+      }
+    }) {
+      matchedCount
+      modifiedCount
     }
   }
 }
@@ -115,88 +97,48 @@ mutation SolicitudUpdate (
 }
 */
 export const createSolicitudes = `
-mutation SolicitudCreate(
-  $dni:String!,$nombre:String!,$correoElectronico:String!,$apellidos:String!,
-			$celular:String!,
-$fechaNacimiento:Date!,
-$facebookUrl:String!,
-$Provincia:String!,
-$Distrito:String!,
-$ModeloHyundai:String!,
-$AnoFab:String!,
-$Placa:String!,
-$VehiculoPropio:Boolean!,
-$NombrePropietarios:String!,
-$ParentescoPropetario:String!,
-$MantenimientoConcesionarios:Boolean!
+mutation MongoDB(
+  $dni: String!
+  $nombre: String!
+  $correoElectronico: String!
+  $apellidos: String!
+  $celular: String!
+  $fechaNacimiento: Date!
+  $facebookUrl: String!
+  $Provincia: String!
+  $Distrito: String!
+  $ModeloHyundai: String!
+  $AnoFab: String!
+  $Placa: String!
+  $VehiculoPropio: Boolean!
+  $NombrePropietarios: String!
+  $ParentescoPropetario: String!
+  $MantenimientoConcesionarios: Boolean!
 ) {
-  solicitudCreate(input: {
-dni : $dni,
-nombre : $nombre, 
-correoElectronico :$correoElectronico,
-apellidos : $apellidos,
-celular : $celular,
-fechaNacimiento : $fechaNacimiento,
-facebookUrl :$facebookUrl,
-Provincia :$Provincia,
-Distrito :$Distrito,
-ModeloHyundai :$ModeloHyundai,
-AnoFab :$AnoFab,
-Placa :$Placa,
-VehiculoPropio :$VehiculoPropio,
-NombrePropietarios :$NombrePropietarios,
-ParentescoPropetario :$ParentescoPropetario,
-MantenimientoConcesionarios :$MantenimientoConcesionarios
-  }) {
-    solicitud {
-      dni
-      nombre
-      correoElectronico
-      apellidos
-      celular
-      fechaRegistro
-      fechaNacimiento
-      facebookUrl
-      Provincia
-      Distrito
-      ModeloHyundai
-      AnoFab
-      Placa
-      VehiculoPropio
-      NombrePropietarios
-      ParentescoPropetario
-      MantenimientoConcesionarios
+  mongoDB {
+    solicitudCreate(
+      input: {
+        dni: $dni
+        nombre: $nombre
+        correoElectronico: $correoElectronico
+        apellidos: $apellidos
+        celular: $celular
+        fechaNacimiento: $fechaNacimiento
+        facebookUrl: $facebookUrl
+        Provincia: $Provincia
+        Distrito: $Distrito
+        ModeloHyundai: $ModeloHyundai
+        AnoFab: $AnoFab
+        Placa: $Placa
+        VehiculoPropio: $VehiculoPropio
+        NombrePropietarios: $NombrePropietarios
+        ParentescoPropetario: $ParentescoPropetario
+        MantenimientoConcesionarios: $MantenimientoConcesionarios
+      }
+    ) {
+      insertedId
     }
   }
 }
+
 `
-/*
-{
-	"name": "fffff",
-	"email": "fdasfda@gmail.com",
-	"rol": "MIEMBRO",
-	"ModeloHyundai": "Hyundai CRETA",
-	"Placa": "xds333"
-}
-*/
-export const createUserSolicitud = `
-mutation UserCreateHyundai($name:String!,$email:String!,
-  $rol:String!,$ModeloHyundai:String!,$Placa:String!) {
-    userCreate(input: {
-      email:$email,
-      name:$name
-      ,rol:$rol
-      ,ModeloHyundai:$ModeloHyundai
-      ,Placa:$Placa
-    }) {
-      user {  
-        name
-        email
-        rol
-        ModeloHyundai
-        Placa
-        avatarUrl
-        description
-      }
-    }
-  }`

@@ -7,8 +7,8 @@ const mongodb = connector.MongoDB('MongoDB', {
   database: g.env("MONGO_DATABASE")
 })
 
-
-const Solicitud = g.model('Solicitud',{
+/*** MONGO DB - Solicitud */
+mongodb.model('Solicitud',{
   dni:g.string().length({min:2,max:100}).unique(),
   nombre:g.string(),
   correoElectronico:g.string().unique(),
@@ -27,96 +27,93 @@ const Solicitud = g.model('Solicitud',{
   MantenimientoConcesionarios:g.boolean(),
   estadoAtendido:g.boolean().default(false),
   fechaRegistro:g.datetime().default(new Date())
-}).auth((rules) => {
+}).collection('solicitudes').auth((rules) => {
   rules.public().read().create().update()
   rules.private().create().delete().update()
 });
 
-
-/*
-// @ts-ignore
-const SolicitudesIngreso = g.model('Solicitudes',{
-  dni:g.string().length({min:2,max:100}).unique(),
-  nombre:g.string(),
-  correoElectronico:g.string().unique(),
-  apellidos:g.string(),
-  celular:g.string(),
-  fechaNacimiento:g.date(),
-  facebookUrl:g.string(),
-  Provincia:g.string(),
-  Distrito:g.string(),
-  ModeloHyundai:g.string(),
-  AnoFab:g.string(),
-  Placa:g.string().unique(),
-  VehiculoPropio:g.boolean(),
-  NombrePropietarios:g.string(),
-  ParentescoPropetario:g.string(),
-  MantenimientoConcesionarios:g.boolean(),
-  estadoAtendido:g.boolean().default(false),
-  fechaRegistro:g.datetime().default(new Date())
-}).auth((rules) => {
-  rules.public().read().create().update()
-  rules.private().create().delete().update()
-});
-*/
-// @ts-ignore
-const User = g.model('User', {
+/*** MONGO DB - User */
+mongodb.model('User', {
   name: g.string().length({min:2,max:100}),
   email:g.string().unique(),
   rol:g.string().default("EXTERNO"),
+  misViajes:g.int().default(0),
+  misRecorridosKM:g.int().default(0),
   ModeloHyundai:g.string().optional(),
   Placa:g.string().optional(),
   avatarUrl: g.url().default("https://platform.cstatic-images.com/xlarge/in/v2/stock_photos/6f0dbf3e-2116-4750-ba5a-004d7ca279e3/9ae25e54-167c-47c8-aa82-e024cd6fcaf4.png"),
   description:g.string().optional(),
-}).auth((rules) => {
+}).collection('users').auth((rules) => {
   rules.public().read()
 });
 
-
-// @ts-ignore
-const Rol = g.model('Rol', {
+/*** MONGO DB - Rol */
+mongodb.model('Rol', {
   name: g.string().length({min:2,max:100}),
   estado:g.int().default(1)
 }).auth((rules) => {
   rules.public().read().create().update()
 });
- 
-// @ts-ignore
-const Viajes = g.model('Viajes', {
-  title:g.string(),
-  maxInscripciones:g.int(),
-  inscripcionesActuales:g.int(),
-  inscripciones: g.relation(() => User).list().optional(),
+
+/*** MONGO DB - Sponsors */
+mongodb.model('Sponsor', {
+    name: g.string().length({min:2,max:100}),
+    logoUrl: g.url().default("https://sportwagen-peru.com/wp-content/uploads/2021/04/logotipo-sportwagen-hyundai.png"),
+    description:g.string().optional(),
+    beneficio:g.string().optional(),
+    estado:g.int().default(1)
 }).auth((rules) => {
-  rules.public().read().create().update()
+    rules.public().read().create().update()
+});
+
+
+/*** MONGO DB - Convenio */
+mongodb.model('Convenio', {
+    name: g.string().length({min:2,max:100}),
+    logoUrl: g.url().default("https://sportwagen-peru.com/wp-content/uploads/2021/04/logotipo-sportwagen-hyundai.png"),
+    description:g.string().optional(),
+    contacto:g.string().optional()
 })
 
-
-
-
-
-/*
-//@ts-ignore
-const Viajes = g.model('Viajes',{
-  title:g.string().search(),
-  maxInscripciones:g.int(),
-  inscripcionesActuales:g.int(),
-  participantes: g.relation(()=> Participantes).optional().list().optional()
+/*** MONGO DB - Viajes */
+mongodb.model('Viaje', {
+    title:g.string(),
+    description:g.string(),
+    maxInscripciones:g.int(),
+    inscripcionesActuales:g.int(),
+    Fecha:g.string(),
+    Ruta:g.string(),
+    TiempoDeViaje:g.string(),
+    RecorridoKM:g.string(),
+    BrochureURL:g.string(),
 }).auth((rules) => {
-  rules.public().read()
-  rules.private().create().delete().update()
+    rules.public().read().create().update()
 });
 
-// @ts-ignore
-const Participantes = g.model('Participantes',{
-  title:g.string(),
-  Viajes:g.relation(Viajes).optional()
+/*** MONGO DB - ViajesItinerario */
+mongodb.model('ViajeItinerario', {
+  title: g.string(),
+  description: g.string(),
+  horas: g.string(),
+  kilometraje: g.string(),
+  mapURLGoogle: g.string(),
+  viajeId: g.string(),
+  order:g.int()
 }).auth((rules) => {
-  rules.public().read()
-  rules.private().create().delete().update()
+    rules.public().read().create().update()
 });
 
-*/
+
+/*** MONGO DB - ViajesUsuario */
+mongodb.model('ViajeUsuario', {
+    viajeId: g.string(),
+    userId: g.string(),
+    estado:g.int().default(1)
+}).auth((rules) => {
+    rules.public().read().create().update()
+});
+
+
 const jwt = auth.JWT({
   issuer: 'grafbase',
   secret:  g.env('NEXTAUTH_SECRET')
@@ -126,6 +123,14 @@ g.datasource(mongodb)
 
 export default config({
   schema: g,
+  cache: {
+    rules: [
+      {
+        types: 'Query',
+        maxAge: 60
+      }
+    ]
+  },
   auth: {
     providers: [jwt],
     rules: (rules) => rules.private()

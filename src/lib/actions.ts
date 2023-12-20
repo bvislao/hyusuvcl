@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || '' : 'http://127.0.0.1:4000/graphql';
 const apiKey = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_KEY || '' : 'letmein';
 const serverUrl = isProduction ? process.env.NEXT_PUBLIC_SERVER_URL : 'http://localhost:3000';
-
+const rolInterno = 'INTERNO';
 
 const client = new GraphQLClient(apiUrl);
 
@@ -28,7 +28,8 @@ export const getUser = (email:string) => {
 export const createUser = (name: string, email: string) => {
   const variables = {
       name: name,
-      email: email
+      email: email,
+      rol:rolInterno
   };
   return makeGraphQLRequest(createUserMutation, variables);
 };
