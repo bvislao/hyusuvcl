@@ -1,10 +1,10 @@
 import { g, auth,connector, config } from '@grafbase/sdk'
 
 const mongodb = connector.MongoDB('MongoDB', {
-  url: g.env("MONGO_ATLAS_URL"),
-  apiKey: g.env("MONGO_API_KEY"),
-  dataSource: g.env("MONGO_DATASOURCE"),
-  database: g.env("MONGO_DATABASE")
+  url: "https://data.mongodb-api.com/app/data-eqvxd/endpoint/data/v1", //g.env("MONGO_ATLAS_URL"),
+  apiKey: "y1ugmP0VbJ2B696d7jZg8MCSONqyV8Awu6VYnJbAI1KVsYCOTZdOn36flS1f2eqn",//g.env("MONGO_API_KEY"),
+  dataSource: "Cluster0",//g.env("MONGO_DATASOURCE"),
+  database: "clubhyundaisuv",//g.env("MONGO_DATABASE")
 })
 
 /*** MONGO DB - Solicitud */
