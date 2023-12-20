@@ -4,21 +4,16 @@ import { config, connector, graph } from '@grafbase/sdk'
 
 const g = graph.Standalone()
 
-const url = g.env("MONGO_ATLAS_URL");
+const url    = g.env("MONGO_ATLAS_URL");
 const apiKey = g.env("MONGO_API_KEY");
 const dataSource = g.env("MONGO_DATASOURCE");
 const database = g.env("MONGO_DATABASE");
 
-console.log("url",url);
-console.log("apiKey",apiKey);
-console.log("dataSource",dataSource);
-console.log("database",database);
-
 const mongodb = connector.MongoDB('MongoDB', {
-  url: url,
-  apiKey: apiKey,
-  dataSource:dataSource,
-  database: database
+  url:'{{ env.MONGO_ATLAS_URL }}',
+  apiKey: '{{ env.MONGO_API_KEY }}',
+  dataSource:'{{ env.MONGO_DATASOURCE }}',
+  database: '{{ env.MONGO_DATABASE }}'
 })
 
 /*** MONGO DB - Solicitud */
