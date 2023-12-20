@@ -10,10 +10,10 @@ const dataSource = g.env("MONGO_DATASOURCE");
 const database = g.env("MONGO_DATABASE");
 
 const mongodb = connector.MongoDB('MongoDB', {
-  url:url ?? '{{ env.MONGO_ATLAS_URL }}',
-  apiKey:apiKey ?? '{{ env.MONGO_API_KEY }}',
-  dataSource:dataSource ?? '{{ env.MONGO_DATASOURCE }}',
-  database: database ?? '{{ env.MONGO_DATABASE }}'
+  url:'{{ env.MONGO_ATLAS_URL }}',
+  apiKey:'{{ env.MONGO_API_KEY }}',
+  dataSource:'{{ env.MONGO_DATASOURCE }}',
+  database: '{{ env.MONGO_DATABASE }}'
 })
 
 /*** MONGO DB - Solicitud */
@@ -125,7 +125,7 @@ mongodb.model('ViajeUsuario', {
 const nextAuth = g.env("NEXTAUTH_SECRET");
 const jwt = auth.JWT({
   issuer: 'grafbase',
-  secret:  nextAuth ?? '{{ env.NEXTAUTH_SECRET }}'
+  secret:  '{{ env.NEXTAUTH_SECRET }}'
 })
 
 
