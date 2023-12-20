@@ -16,6 +16,7 @@ export const authOptions: NextAuthOptions = {
   ],
   jwt: {
     encode: ({ secret, token }) => {
+      console.log("fff");
       const encodedToken = jsonwebtoken.sign(
         {
           ...token,
@@ -42,6 +43,7 @@ export const authOptions: NextAuthOptions = {
 
       try { 
         const data =await getUser(email) as { user?: UserProfile }
+        console.log(data);
         //console.log("session",data);
         const newSession = {
           ...session,
@@ -62,6 +64,7 @@ export const authOptions: NextAuthOptions = {
     }) {
       try {
         const userExists = await getUser(user?.email as string) as { user?: UserProfile }
+        console.log("userExists",userExists);
         if (!userExists?.user?.name) {
           return false;//await createUser(user.name as string, user.email as string)
           }
