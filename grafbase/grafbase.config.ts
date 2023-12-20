@@ -1,10 +1,14 @@
-import { g, auth,connector, config } from '@grafbase/sdk'
+//import { g, auth,connector, config } from '@grafbase/sdk'
+import { config, connector, auth, graph } from '@grafbase/sdk'
+
+
+const g = graph.Standalone()
 
 const mongodb = connector.MongoDB('MongoDB', {
-  url: "https://data.mongodb-api.com/app/data-eqvxd/endpoint/data/v1", //g.env("MONGO_ATLAS_URL"),
-  apiKey: "y1ugmP0VbJ2B696d7jZg8MCSONqyV8Awu6VYnJbAI1KVsYCOTZdOn36flS1f2eqn",//g.env("MONGO_API_KEY"),
-  dataSource: "Cluster0",//g.env("MONGO_DATASOURCE"),
-  database: "clubhyundaisuv",//g.env("MONGO_DATABASE")
+  url: g.env("MONGO_ATLAS_URL"),
+  apiKey: g.env("MONGO_API_KEY"),
+  dataSource:g.env("MONGO_DATASOURCE"),
+  database: g.env("MONGO_DATABASE")
 })
 
 /*** MONGO DB - Solicitud */
@@ -113,12 +117,12 @@ mongodb.model('ViajeUsuario', {
     rules.public().read().create().update()
 });
 
-/*
+
 const jwt = auth.JWT({
   issuer: 'grafbase',
   secret:  g.env('NEXTAUTH_SECRET')
 })
-*/
+
 g.datasource(mongodb)
 
 export default config({
@@ -131,8 +135,8 @@ export default config({
       }
     ]
   }
-  /*,auth: {
+  ,auth: {
     providers: [jwt],
     rules: (rules) => rules.private()
-  },*/
+  },
 })
