@@ -113,12 +113,12 @@ mongodb.model('ViajeUsuario', {
     rules.public().read().create().update()
 });
 
-
+/*
 const jwt = auth.JWT({
   issuer: 'grafbase',
   secret:  g.env('NEXTAUTH_SECRET')
 })
-
+*/
 g.datasource(mongodb)
 
 export default config({
@@ -130,9 +130,9 @@ export default config({
         maxAge: 60
       }
     ]
-  },
-  auth: {
+  }
+  /*,auth: {
     providers: [jwt],
     rules: (rules) => rules.private()
-  },
+  },*/
 })
