@@ -7,6 +7,10 @@ const url = g.env("MONGO_ATLAS_URL");
 const apiKey = g.env("MONGO_API_KEY");
 const dataSource = g.env("MONGO_DATASOURCE");
 const database = g.env("MONGO_DATABASE");
+console.log("url",url);
+console.log("apiKey",apiKey);
+console.log("dataSource",dataSource);
+console.log("database",database);
 
 const mongodb = connector.MongoDB('MongoDB', {
   url: url,
@@ -14,6 +18,8 @@ const mongodb = connector.MongoDB('MongoDB', {
   dataSource:dataSource,
   database: database
 })
+
+console.log(mongodb);
 
 /*** MONGO DB - Solicitud */
 mongodb.model('Solicitud',{
