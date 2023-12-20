@@ -138,8 +138,16 @@ const jwt = auth.JWT({
  */
 g.datasource(mongodb)
 
+
+// Resolvers - https://grafbase.com/docs/resolvers
+//
+g.query('helloWorld', {
+   returns: g.string(),
+   resolver: 'hello-world',
+ })
+
 export default config({
-  schema: g,
+    graph: g,
   cache: {
     rules: [
       {
