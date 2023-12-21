@@ -22,6 +22,7 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
 
 
 export const getUser = (email:string) => {
+    debugger;
     return makeGraphQLRequest(getUserQuery,{email})
 }
 

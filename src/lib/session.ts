@@ -6,6 +6,7 @@ import jsonwebtoken from 'jsonwebtoken'
 import { JWT } from "next-auth/jwt";
 import {  createUser,getUser } from "./actions";
 import { SessionInterface, UserProfile } from "../../common.types";
+import {debug} from "util";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,7 +17,6 @@ export const authOptions: NextAuthOptions = {
   ],
   jwt: {
     encode: ({ secret, token }) => {
-      console.log("fff");
       const encodedToken = jsonwebtoken.sign(
         {
           ...token,
@@ -38,18 +38,19 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session }) {
-      // console.log("xxxx",session);
+      console.log("session",session);
       const email = session?.user?.email as string;
-
-      try { 
+      try {
         const data =await getUser(email) as { user?: UserProfile }
-        console.log(data);
-        //console.log("session",data);
+        const dataUser = data.mongoDB.userCollection.edges[0].node;
+        if(!dataUser) {
+          throw new Error("User not found");
+        }
         const newSession = {
           ...session,
           user: {
             ...session.user,
-            ...data?.user,
+            ...dataUser,
           },
         };
        
@@ -64,14 +65,17 @@ export const authOptions: NextAuthOptions = {
     }) {
       try {
         const userExists = await getUser(user?.email as string) as { user?: UserProfile }
-        console.log("userExists",userExists);
-        if (!userExists?.user?.name) {
+        const user = userExists.mongoDB?.userCollection?.edges[0].node;
+        if(!user) {
+          return false;
+        }
+        //console.log("userExists",userExists.mongoDB?.userCollection?.edges[0].node.email);
+        if (!user.email) {
           return false;//await createUser(user.name as string, user.email as string)
           }
 
         return true;
       } catch (error: any) {
-        console.log("Error checking if user exists: ", error.message);
         return false;
       }
     },
@@ -80,5 +84,6 @@ export const authOptions: NextAuthOptions = {
 
  export async function getCurrentUser() {
    const session = await getServerSession(authOptions) as SessionInterface;
+   console.log("getCurrentUser",session)
    return session;
  }
