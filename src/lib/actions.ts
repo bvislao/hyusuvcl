@@ -1,6 +1,11 @@
-import { createUserMutation,getUserQuery,createSolicitudes } from "@/graphql";
-import { GraphQLClient } from "graphql-request";
-import { Solicitudes } from "../../common.types";
+import {
+    createSolicitudes,
+    createUserMutation,
+    getUserQuery,
+    searchSolicitudExistenteDNI, searchSolicitudExistenteEmail, searchSolicitudExistentePlaca
+} from "@/graphql";
+import {GraphQLClient} from "graphql-request";
+import {mongoDB, Solicitudes} from "../../common.types";
 
 const isProduction = process.env.NODE_ENV === 'production';
 const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || '' : 'http://127.0.0.1:4000/graphql';
@@ -11,48 +16,81 @@ const rolInterno = 'INTERNO';
 const client = new GraphQLClient(apiUrl);
 
 
+
 const makeGraphQLRequest = async (query: string, variables = {}) => {
     try {
-      client.setHeader("x-api-key",apiKey);
-      return await client.request(query, variables);
+        client.setHeader("x-api-key", apiKey);
+        return await client.request(query, variables);
     } catch (err) {
-      throw err;
+        throw err;
     }
-  };
+};
 
 
-export const getUser = (email:string) => {
-    debugger;
-    return makeGraphQLRequest(getUserQuery,{email})
+export const getUser = (email: string) => {
+    return makeGraphQLRequest(getUserQuery, {email})
 }
 
 export const createUser = (name: string, email: string) => {
-  const variables = {
-      name: name,
-      email: email,
-      rol:rolInterno
-  };
-  return makeGraphQLRequest(createUserMutation, variables);
+    const variables = {
+        name: name,
+        email: email,
+        rol: rolInterno
+    };
+    return makeGraphQLRequest(createUserMutation, variables);
 };
 
+
+export const validarSolicitudRegister = async (solicitud: Solicitudes) => {
+    var Reg: number = 0;
+    try {
+        const consultOne = await makeGraphQLRequest(searchSolicitudExistenteDNI, {"dni": solicitud.dni.trim()}) as mongoDB;
+        const consultTwo = await makeGraphQLRequest(searchSolicitudExistentePlaca, {"placa": solicitud.Placa.trim()}) as mongoDB;
+        const consultThreww = await makeGraphQLRequest(searchSolicitudExistenteEmail, {"correoElectronico": solicitud.correoElectronico.trim()}) as mongoDB;
+
+        if(consultOne.mongoDB?.solicitudCollection?.edges?.length > 0){
+            Reg++;
+        }
+        if(consultTwo.mongoDB?.solicitudCollection?.edges?.length > 0){
+            Reg++;
+        }
+        if(consultThreww.mongoDB?.solicitudCollection?.edges?.length > 0){
+            Reg++;
+        }
+
+        return Reg;
+    } catch (err) {
+        Reg = 99;
+        return Reg;
+    }
+
+}
 export const createSolicitudRegister = (solicitud: Solicitudes) => {
-  const variables = {
-    "dni": solicitud.dni,
-	"correoElectronico": solicitud.correoElectronico,
-	"nombre":solicitud.nombre ,
-	"apellidos": solicitud.apellidos,
-	"celular": solicitud.celular,
-	"fechaNacimiento": solicitud.fechaNacimiento,
-	"facebookUrl":solicitud.facebookUrl,
-	"Provincia": solicitud.Provincia,
-	"Distrito": solicitud.Distrito,
-	"ModeloHyundai": solicitud.ModeloHyundai,
-	"AnoFab":solicitud.AnoFab,
-	"Placa": solicitud.Placa,
-	"VehiculoPropio": solicitud.VehiculoPropio.toString() === "SI" ? true : false,
-	"NombrePropietarios": solicitud.NombrePropietarios,
-	"ParentescoPropetario": solicitud.ParentescoPropetario,
-	"MantenimientoConcesionarios": solicitud.MantenimientoConcesionarios.toString() === "SI" ? true : false
-};
-  return makeGraphQLRequest(createSolicitudes, variables);
+    const variables = {
+        "dni": solicitud.dni,
+        "correoElectronico": solicitud.correoElectronico,
+        "nombre": solicitud.nombre,
+        "apellidos": solicitud.apellidos,
+        "celular": solicitud.celular,
+        "fechaNacimiento": solicitud.fechaNacimiento,
+        "facebookUrl": solicitud.facebookUrl,
+        "Provincia": solicitud.Provincia,
+        "Distrito": solicitud.Distrito,
+        "ModeloHyundai": solicitud.ModeloHyundai,
+        "AnoFab": solicitud.AnoFab,
+        "Placa": solicitud.Placa,
+        "VehiculoPropio": solicitud.VehiculoPropio.toString() === "SI" ? true : false,
+        "NombrePropietarios": solicitud.NombrePropietarios,
+        "ParentescoPropetario": solicitud.ParentescoPropetario,
+        "MantenimientoConcesionarios": solicitud.MantenimientoConcesionarios.toString() === "SI" ? true : false
+    };
+    try {
+        return makeGraphQLRequest(createSolicitudes, variables).then(value => {
+            return value?.mongoDB?.solicitudCreate?.insertedId;
+        });
+    } catch (err) {
+        return null;
+    }
+
+
 }

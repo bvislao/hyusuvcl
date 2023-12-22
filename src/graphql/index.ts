@@ -76,6 +76,77 @@ mutation MongoDB($dni:String!) {
 }
 `
 
+
+export const searchSolicitudExistenteDNI = `
+query MongoDB(
+  $dni: String!
+) {
+  mongoDB {
+    solicitudCollection(
+      filter: { dni: { eq: $dni } }
+      first: 10
+    ) {
+      edges {
+        node {
+          id
+          dni
+          correoElectronico
+          Placa
+        }
+      }
+    }
+  }
+}
+
+`
+
+export const searchSolicitudExistentePlaca = `
+query MongoDB(
+  $placa: String!
+) {
+  mongoDB {
+    solicitudCollection(
+      filter: { Placa: { eq: $placa } }
+      first: 10
+    ) {
+      edges {
+        node {
+          id
+          dni
+          correoElectronico
+          Placa
+        }
+      }
+    }
+  }
+}
+
+`
+
+
+export const searchSolicitudExistenteEmail = `
+query MongoDB(
+  $correoElectronico: String!
+) {
+  mongoDB {
+    solicitudCollection(
+      filter: { correoElectronico: { eq: $correoElectronico } }
+      first: 10
+    ) {
+      edges {
+        node {
+          id
+          dni
+          correoElectronico
+          Placa
+        }
+      }
+    }
+  }
+}
+`
+
+
 /*
 {
 	"dni": "728545495551",

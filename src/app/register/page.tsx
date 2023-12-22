@@ -14,7 +14,7 @@ import { Solicitudes } from "../../../common.types";
 import CustomMenu from "@/components/CustomMenu";
 import { modelHyundaiFilters, SINO } from "../../constants";
 import Button from "@/components/Button";
-import { createSolicitudRegister } from "@/lib/actions";
+import {createSolicitudRegister, validarSolicitudRegister} from "@/lib/actions";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { toast } from "react-toastify";
 
@@ -77,13 +77,15 @@ const RegisterMember = () => {
   };
 
   const onError = (err: any) => {
-    console.log(`hCaptcha Error: ${err}`);
+    //console.log(`hCaptcha Error: ${err}`);
+    console.log(`hCaptcha Error`);
   };
 
   useEffect(() => {
     if (token != "") {
       // Token is set, can submit here
-      console.log(`hCaptcha Token: ${token}`);
+      //console.log(`hCaptcha Token: ${token}`);
+      console.log(`hCaptcha Token: already set`);
     }
   }, [token, form]);
 
@@ -97,17 +99,33 @@ const RegisterMember = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
+      //validate Token Captcha
+
       if (token == "" || token == null || token == undefined) {
         toast('Captcha invalido', { hideProgressBar: true, autoClose: 2000, type: 'error' })
         setSubmitting(false);
         return;
       }
+      //validate also dni email and placa no exists
+      var validar = await validarSolicitudRegister(form);
+      if(validar > 0){
+        toast('Se encontro coincidencias con otra solicitud, valide la información ingresada.', { hideProgressBar: true, autoClose: 2000, type: 'warning' })
+        setSubmitting(false);
+        return;
+      }
+
       var response = await createSolicitudRegister(form);
-      console.log(response);
-      router.push("/thanks-register");
+      if(response == null){
+        toast('Ocurrio un error al registrar la solicitud.', { hideProgressBar: true, autoClose: 2000, type: 'error' })
+        setSubmitting(false);
+        return;
+      }else{
+        toast('Se registro la solicitud correctamente.', { hideProgressBar: true, autoClose: 2000, type: 'success' })
+        setSubmitting(false);
+        //router.push("/thanks-register");
+      }
     } catch (error) {
-      console.log(error);
-      alert(`Ocurrio un error al registrar!`);
+      toast('Ocurrio un error al registrar la solicitud.', { hideProgressBar: true, autoClose: 2000, type: 'error' })
     } finally {
       setSubmitting(false);
     }

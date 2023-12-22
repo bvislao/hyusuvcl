@@ -1,6 +1,12 @@
 import { User, Session } from 'next-auth'
 
 
+export interface mongoDB{
+    solicitudCollection?: solicitudCollection
+}
+export interface solicitudCollection{
+    edges?: []
+}
 export interface UserProfile {
     id: string;
     name: string;

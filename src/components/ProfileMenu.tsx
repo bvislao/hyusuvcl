@@ -9,7 +9,6 @@ import { SessionInterface } from "../../common.types";
 
 
 const ProfileMenu = ({ session }: { session: SessionInterface }) => {
-    console.log("xx2",session);
     const [openModal, setOpenModal] = useState(false);
     const src = `${session.user.avatarUrl}`;
     return (
