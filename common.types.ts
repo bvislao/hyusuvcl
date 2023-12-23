@@ -3,9 +3,17 @@ import { User, Session } from 'next-auth'
 
 export interface mongoDB{
     solicitudCollection?: solicitudCollection
+    solicitudCreate? : solicitudCreate
+    userCollection? : userCollection
 }
 export interface solicitudCollection{
     edges?: []
+}
+export interface userCollection{
+    edges?: []
+}
+export interface  solicitudCreate{
+    insertedId?: string
 }
 export interface UserProfile {
     id: string;
@@ -13,6 +21,8 @@ export interface UserProfile {
     rol:string;
     ModeloHyundai:string;
     Placa:string;
+    misViajes:string;
+    misRecorridosKM:string;
     email: string;
     description: string | null;
     avatarUrl: string;

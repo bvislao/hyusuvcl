@@ -6,6 +6,9 @@ import {
 } from "@/graphql";
 import {GraphQLClient} from "graphql-request";
 import {mongoDB, Solicitudes} from "../../common.types";
+// @ts-ignore
+import {mockSession} from "next-auth/client/__tests__/helpers/mocks";
+import user = mockSession.user;
 
 const isProduction = process.env.NODE_ENV === 'production';
 const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || '' : 'http://127.0.0.1:4000/graphql';
@@ -27,8 +30,16 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
 };
 
 
-export const getUser = (email: string) => {
-    return makeGraphQLRequest(getUserQuery, {email})
+export const getUser = async (email: string) => {
+    const userExists = await makeGraphQLRequest(getUserQuery, {email : email.trim()});
+    // @ts-ignore
+    if(userExists?.mongoDB?.userCollection.edges.length > 0){
+        // @ts-ignore
+        return userExists?.mongoDB?.userCollection.edges[0].node;
+    }else
+    {
+        return null;
+    }
 }
 
 export const createUser = (name: string, email: string) => {
@@ -48,13 +59,16 @@ export const validarSolicitudRegister = async (solicitud: Solicitudes) => {
         const consultTwo = await makeGraphQLRequest(searchSolicitudExistentePlaca, {"placa": solicitud.Placa.trim()}) as mongoDB;
         const consultThreww = await makeGraphQLRequest(searchSolicitudExistenteEmail, {"correoElectronico": solicitud.correoElectronico.trim()}) as mongoDB;
 
-        if(consultOne.mongoDB?.solicitudCollection?.edges?.length > 0){
+        // @ts-ignore
+        if(consultOne?.solicitudCollection?.edges?.length > 0){
             Reg++;
         }
-        if(consultTwo.mongoDB?.solicitudCollection?.edges?.length > 0){
+        // @ts-ignore
+        if(consultTwo?.solicitudCollection?.edges?.length > 0){
             Reg++;
         }
-        if(consultThreww.mongoDB?.solicitudCollection?.edges?.length > 0){
+        // @ts-ignore
+        if(consultThreww?.solicitudCollection?.edges?.length > 0){
             Reg++;
         }
 
@@ -65,7 +79,7 @@ export const validarSolicitudRegister = async (solicitud: Solicitudes) => {
     }
 
 }
-export const createSolicitudRegister = (solicitud: Solicitudes) => {
+export const createSolicitudRegister = async (solicitud: Solicitudes) => {
     const variables = {
         "dni": solicitud.dni,
         "correoElectronico": solicitud.correoElectronico,
@@ -85,9 +99,14 @@ export const createSolicitudRegister = (solicitud: Solicitudes) => {
         "MantenimientoConcesionarios": solicitud.MantenimientoConcesionarios.toString() === "SI" ? true : false
     };
     try {
-        return makeGraphQLRequest(createSolicitudes, variables).then(value => {
+        const registerSolicitud = await makeGraphQLRequest(createSolicitudes, variables) as mongoDB;
+
+        if(registerSolicitud.solicitudCreate?.insertedId) return registerSolicitud.solicitudCreate?.insertedId; else return null;
+
+
+        /*.then(value => {
             return value?.mongoDB?.solicitudCreate?.insertedId;
-        });
+        });*/
     } catch (err) {
         return null;
     }

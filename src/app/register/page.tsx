@@ -115,6 +115,7 @@ const RegisterMember = () => {
       }
 
       var response = await createSolicitudRegister(form);
+      console.log(response);
       if(response == null){
         toast('Ocurrio un error al registrar la solicitud.', { hideProgressBar: true, autoClose: 2000, type: 'error' })
         setSubmitting(false);

@@ -42,15 +42,14 @@ export const authOptions: NextAuthOptions = {
       const email = session?.user?.email as string;
       try {
         const data =await getUser(email) as { user?: UserProfile }
-        const dataUser = data.mongoDB.userCollection.edges[0].node;
-        if(!dataUser) {
+        if(data == null) {
           throw new Error("User not found");
         }
         const newSession = {
           ...session,
           user: {
             ...session.user,
-            ...dataUser,
+            ...data,
           },
         };
        
@@ -65,8 +64,7 @@ export const authOptions: NextAuthOptions = {
     }) {
       try {
         const userExists = await getUser(user?.email as string) as { user?: UserProfile }
-        const user = userExists.mongoDB?.userCollection?.edges[0].node;
-        if(!user) {
+        if(!userExists) {
           return false;
         }
         //console.log("userExists",userExists.mongoDB?.userCollection?.edges[0].node.email);
@@ -84,6 +82,5 @@ export const authOptions: NextAuthOptions = {
 
  export async function getCurrentUser() {
    const session = await getServerSession(authOptions) as SessionInterface;
-   console.log("getCurrentUser",session)
    return session;
  }
