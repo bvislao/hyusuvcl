@@ -1,6 +1,33 @@
 import { User, Session } from 'next-auth'
 
+interface Node {
+    id?: string,
+    dni?: string,
+    nombre?: string,
+    apellidos?: string,
+    correoElectronico?: string,
+    facebookUrl?: string,
+    ModeloHyundai?: string,
+    AnoFab?: string,
+    Placa?: string,
+    estadoAtendido?: boolean | false,
+}
 
+export interface Edge {
+    node: Node; // 'node' field within each 'Edge' object
+}
+
+interface SolicitudCollection {
+    edges: Edge[]; // Array of Edge objects
+}
+
+interface MongoDB {
+    solicitudCollection: SolicitudCollection;
+}
+
+export interface GraphQLResponseTypes {
+    mongoDB: MongoDB;
+}
 export interface mongoDB{
     solicitudCollection?: solicitudCollection
     solicitudCreate? : solicitudCreate

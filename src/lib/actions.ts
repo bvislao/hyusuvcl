@@ -1,11 +1,11 @@
 import {
     createSolicitudes,
-    createUserMutation,
+    createUserMutation, getSolicitudesPendientes,
     getUserQuery,
     searchSolicitudExistenteDNI, searchSolicitudExistenteEmail, searchSolicitudExistentePlaca
 } from "@/graphql";
 import {GraphQLClient} from "graphql-request";
-import {mongoDB, Solicitudes} from "../../common.types";
+import {GraphQLResponseTypes, mongoDB, Solicitudes} from "../../common.types";
 // @ts-ignore
 import {mockSession} from "next-auth/client/__tests__/helpers/mocks";
 import user = mockSession.user;
@@ -79,6 +79,19 @@ export const validarSolicitudRegister = async (solicitud: Solicitudes) => {
     }
 
 }
+
+export const getSolicitudesPorAtender = async () => {
+    try {
+        const consult = await makeGraphQLRequest(getSolicitudesPendientes, {}) as GraphQLResponseTypes;
+        console.log("consult",consult.mongoDB.solicitudCollection.edges.length);
+        // @ts-ignore
+        return consult.mongoDB.solicitudCollection.edges;
+        //return consult?.mongoDB?.solicitudCollection?.edges?.length > 0 ? consult?.mongoDB?.solicitudCollection?.edges : null;
+    } catch (err) {
+        return null;
+    }
+
+}
 export const createSolicitudRegister = async (solicitud: Solicitudes) => {
     const variables = {
         "dni": solicitud.dni,
@@ -100,13 +113,7 @@ export const createSolicitudRegister = async (solicitud: Solicitudes) => {
     };
     try {
         const registerSolicitud = await makeGraphQLRequest(createSolicitudes, variables) as mongoDB;
-
         if(registerSolicitud.solicitudCreate?.insertedId) return registerSolicitud.solicitudCreate?.insertedId; else return null;
-
-
-        /*.then(value => {
-            return value?.mongoDB?.solicitudCreate?.insertedId;
-        });*/
     } catch (err) {
         return null;
     }

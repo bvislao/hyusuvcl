@@ -211,5 +211,31 @@ mutation MongoDB(
     }
   }
 }
+`
 
+export const getSolicitudesPendientes = `
+query MongoDB {
+  mongoDB {
+    solicitudCollection(first: 1000, filter: {
+      estadoAtendido:{
+        eq:false
+      }
+    }) {
+      edges {
+        node {
+          id
+          dni
+          nombre
+          apellidos
+          correoElectronico
+          facebookUrl
+          ModeloHyundai
+          AnoFab
+          Placa
+          estadoAtendido
+        }
+      }
+    }
+  }
+}
 `

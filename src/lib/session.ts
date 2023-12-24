@@ -38,8 +38,8 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session }) {
-      console.log("session",session);
       const email = session?.user?.email as string;
+      console.log("sessionEmail",session);
       try {
         const data =await getUser(email) as { user?: UserProfile }
         if(data == null) {
